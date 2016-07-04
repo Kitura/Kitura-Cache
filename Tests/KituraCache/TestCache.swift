@@ -95,11 +95,11 @@ class TestCache : XCTestCase {
         cache.setObject(value2, forKey: "key2")
         cache.setObject(value3, forKey: "key3")
         
-        sleep(6)
+        sleep(7)
         var keys = cache.keys()
         XCTAssertEqual(keys!.count, 3)
 
-        sleep(6)
+        sleep(7)
         keys = cache.keys()
         XCTAssertEqual(keys!.count, 0)
         
@@ -107,15 +107,15 @@ class TestCache : XCTestCase {
         cache.setObject(value2, forKey: "key2", withTTL: 2)
         cache.setObject(value3, forKey: "key3")
 
-        sleep(6)
+        sleep(7)
         keys = cache.keys()
         XCTAssertEqual(keys!.count, 2)
         
-        sleep(6)
+        sleep(7)
         keys = cache.keys()
         XCTAssertEqual(keys!.count, 1)
         
-        sleep(6)
+        sleep(7)
         keys = cache.keys()
         XCTAssertEqual(keys!.count, 1)
     }
