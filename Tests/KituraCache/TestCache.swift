@@ -90,7 +90,7 @@ class TestCache : XCTestCase {
     }
     
     func testTTL() {
-        let cache = Cache(defaultTTL: 10, checkPeriod: 4)
+        let cache = Cache(defaultTTL: 10, checkFrequency: 4)
         cache.setObject(value1, forKey: "key1")
         cache.setObject(value2, forKey: "key2")
         cache.setObject(value3, forKey: "key3")

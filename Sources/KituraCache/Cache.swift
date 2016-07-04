@@ -21,16 +21,16 @@ public class Cache {
     
     private var cache = [AnyKey:CacheObject]()
     private let defaultTTL: UInt
-    private let checkPeriod: UInt
+    private let checkFrequency: UInt
     public private(set) var statistics: Statistics
     
     private var timer: dispatch_source_t!
     private let timerQueue: dispatch_queue_t!
     private let queue: dispatch_queue_t!
     
-    public init(defaultTTL: UInt = 0, checkPeriod: UInt = 600) {
+    public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600) {
         self.defaultTTL = defaultTTL
-        self.checkPeriod = checkPeriod
+        self.checkFrequency = checkFrequency
         statistics = Statistics()
         queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
         timerQueue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
@@ -125,7 +125,7 @@ public class Cache {
     
     private func startDataChecks() {
         timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, timerQueue)
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkPeriod) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
+        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkFrequency) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
         dispatch_source_set_event_handler(timer) {
             dispatch_barrier_sync(self.queue) {
                 for (key, cacheObject) in self.cache {
@@ -142,7 +142,7 @@ public class Cache {
     
     private func restartDataChecks() {
         dispatch_suspend(timer)
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkPeriod) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
+        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkFrequency) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
         dispatch_resume(timer)
     }
     
