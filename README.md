@@ -18,33 +18,36 @@ Kitura thread-safe in-memory cache.
 **Where:**
    - *defaultTTL* is the default Time To Live (TTL) of cache entries in seconds, its default value is 0, which means infinity
 
-   - *checkFrequency* defines the frequency in seconds of checks for expired entries
+   - *checkFrequency* defines the frequency in seconds for checking and removing expired entries
 
-### Add
+### Add or update entry in the cache
 ```swift
 public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
 ```
  - *key* has to be *Hashable*
  - if TTL is not specified, cache's *defaultTTL* is used for the entry
 
-### Get
+### Retrieve an entry from the cache
 ```swift
   public func object<T: Hashable>(forKey key: T) -> Any?
 ```
+- *key* has to be *Hashable*
 
-### Delete
+### Delete entries in the cache
 ```swift
 public func removeObject<T: Hashable>(forKey key: T)
 public func removeObjects<T: Hashable>(forKeys keys: T...)
 public func removeObjects<T: Hashable>(forKeys keys: [T])
 public func removeAllObjects()
 ```
+- *key/s* have to be *Hashable*
 
-### Set TTL
+### Set TTL of an entry in the cache
 ```swift
 public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool
 ```
 - returns *false* if *key* doesn't exits
+- *key* has to be *Hashable*
 
 ### Retrieve all keys
 
@@ -52,13 +55,13 @@ public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool
 public func keys() -> [Any]?
 ```
 
-### Flush
-Removes all values and resets the statistics
+### Remove all values and reset the statistics of the cache
+
 ```swift
 public func flush()
 ```
 
-### Statistics
+### Retrieve cache statistics
 Cache statistics are stored in
 ```swift
 public private(set) var statistics: Statistics

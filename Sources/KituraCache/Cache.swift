@@ -33,7 +33,7 @@ public class Cache {
         self.checkFrequency = checkFrequency
         statistics = Statistics()
         queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
-        timerQueue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
+        timerQueue = dispatch_queue_create("", DISPATCH_QUEUE_SERIAL)
         startDataChecks()
     }
     
@@ -106,7 +106,7 @@ public class Cache {
         return success
     }
     
-    public func keys() -> [Any]? {
+    public func keys() -> [Any] {
         var keys = [Any]()
         dispatch_sync(queue) {
             for key in self.cache.keys {

@@ -16,7 +16,6 @@
 
 import XCTest
 import Foundation
-import Kitura
 
 @testable import KituraCache
 
@@ -54,9 +53,11 @@ class TestCache : XCTestCase {
         XCTAssertEqual(cache.statistics.numberOfKeys, 3)
 
         var keys = cache.keys()
-        XCTAssertEqual(keys!.count, 3)
+        XCTAssertEqual(keys.count, 3)
         
-        let object2 = cache.object(forKey: "key2") as! Numbers
+        let obj2 = cache.object(forKey: "key2")
+        XCTAssertNotNil(obj2)
+        let object2 = obj2 as! Numbers
         XCTAssertEqual(object2.one, value2.one)
         XCTAssertEqual(object2.two, value2.two)
         XCTAssertEqual(object2.three["twenty three"]!, value2.three["twenty three"]!)
@@ -74,8 +75,8 @@ class TestCache : XCTestCase {
         cache.removeObject(forKey: "key2")
         
         keys = cache.keys()
-        XCTAssertEqual(keys!.count, 1)
-        XCTAssertEqual(keys![0] as? String, "key1")
+        XCTAssertEqual(keys.count, 1)
+        XCTAssertEqual(keys[0] as? String, "key1")
         
         cache.removeAllObjects()
         XCTAssertEqual(cache.statistics.numberOfKeys, 0)
@@ -97,11 +98,11 @@ class TestCache : XCTestCase {
         
         sleep(7)
         var keys = cache.keys()
-        XCTAssertEqual(keys!.count, 3)
+        XCTAssertEqual(keys.count, 3)
 
         sleep(7)
         keys = cache.keys()
-        XCTAssertEqual(keys!.count, 0)
+        XCTAssertEqual(keys.count, 0)
         
         cache.setObject(value1, forKey: "key1", withTTL: 100)
         cache.setObject(value2, forKey: "key2", withTTL: 2)
@@ -109,15 +110,15 @@ class TestCache : XCTestCase {
 
         sleep(7)
         keys = cache.keys()
-        XCTAssertEqual(keys!.count, 2)
+        XCTAssertEqual(keys.count, 2)
         
         sleep(7)
         keys = cache.keys()
-        XCTAssertEqual(keys!.count, 1)
+        XCTAssertEqual(keys.count, 1)
         
         sleep(7)
         keys = cache.keys()
-        XCTAssertEqual(keys!.count, 1)
+        XCTAssertEqual(keys.count, 1)
     }
     
  }
