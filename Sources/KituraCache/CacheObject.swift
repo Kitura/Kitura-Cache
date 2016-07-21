@@ -18,7 +18,11 @@ import Foundation
 
 class CacheObject {
     var data : Any
-    var expirationDate : NSDate
+    #if os(Linux)
+        var expirationDate : NSDate
+    #else
+        var expirationDate : Date
+    #endif
     
     init(data: Any, ttl: UInt) {
         self.data = data
@@ -33,7 +37,13 @@ class CacheObject {
         expirationDate = CacheObject.expirationDate(fromTTL: ttl)
     }
     
+    #if os(Linux)
     class func expirationDate(fromTTL ttl: UInt) -> NSDate {
         return ttl == 0 ? NSDate.distantFuture() : NSDate().addingTimeInterval(NSTimeInterval(ttl))
     }
+    #else
+    class func expirationDate(fromTTL ttl: UInt) -> Date {
+        return ttl == 0 ? Date.distantFuture : Date().addingTimeInterval(TimeInterval(ttl))
+    }
+    #endif
 }
