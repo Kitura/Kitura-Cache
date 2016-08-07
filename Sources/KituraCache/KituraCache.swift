@@ -17,7 +17,7 @@
 import Foundation
 import Dispatch
 
-public class Cache {
+public class KituraCache {
     
     private var cache = [AnyKey:CacheObject]()
     private let defaultTTL: UInt

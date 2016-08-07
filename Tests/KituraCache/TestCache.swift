@@ -45,7 +45,7 @@ class TestCache : XCTestCase {
     let value3 =  Numbers(one: 3, two: "thirty two", three: ["thirty three":[21,22,23], "thirty four":[1,2,3]])
 
     func testBasic() {
-        let cache = Cache()
+        let cache = KituraCache()
         cache.setObject(value1, forKey: "key1")
         cache.setObject(value2, forKey: "key2")
         cache.setObject(value3, forKey: "key3")
@@ -91,7 +91,7 @@ class TestCache : XCTestCase {
     }
     
     func testTTL() {
-        let cache = Cache(defaultTTL: 10, checkFrequency: 4)
+        let cache = KituraCache(defaultTTL: 10, checkFrequency: 4)
         cache.setObject(value1, forKey: "key1")
         cache.setObject(value2, forKey: "key2")
         cache.setObject(value3, forKey: "key3")
