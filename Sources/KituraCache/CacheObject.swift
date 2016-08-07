@@ -34,6 +34,6 @@ class CacheObject {
     }
     
     class func expirationDate(fromTTL ttl: UInt) -> Date {
-        return ttl == 0 ? Date.distantFuture : Date().addingTimeInterval(TimeInterval(ttl))
+        return ttl == 0 ? Date.distantFuture : Date() + TimeInterval(ttl)
     }
 }
