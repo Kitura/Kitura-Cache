@@ -44,7 +44,7 @@ public class Cache {
             timerQueue = dispatch_queue_create("", DISPATCH_QUEUE_SERIAL)
         #else
             queue =  DispatchQueue(label: "", attributes: [.concurrent])
-            timerQueue =  DispatchQueue(label: "", attributes: [.serial])
+            timerQueue =  DispatchQueue(label: "", attributes: [])
         #endif
 
         startDataChecks()
@@ -80,7 +80,7 @@ public class Cache {
     }
     
     private func getCacheObject<T: Hashable>(forKey key: T) -> Any? {
-        if let cacheObject = cache[AnyKey(key)] where !cacheObject.expired() {
+        if let cacheObject = cache[AnyKey(key)], !cacheObject.expired() {
             statistics.hits += 1
             return cacheObject.data
         }
@@ -164,7 +164,7 @@ public class Cache {
     }
     
     private func setCacheObjectTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
-        if let cacheObject = cache[AnyKey(key)] where !cacheObject.expired() {
+        if let cacheObject = cache[AnyKey(key)], !cacheObject.expired() {
             cacheObject.setTTL(ttl)
             return true
         }
@@ -246,7 +246,7 @@ public class Cache {
     }
 #else
     private func startDataChecks() {
-        timer = DispatchSource.timer(queue: timerQueue)
+        timer = DispatchSource.makeTimerSource(queue: timerQueue)
         timer!.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
         timer!.setEventHandler() {
             self.queue.sync(flags: [.barrier], execute: self.check)
