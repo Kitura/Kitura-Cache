@@ -14,7 +14,6 @@
  * limitations under the License.
  **/
 
-
 struct AnyKey : Hashable {
     let key: Any
     private let hashValueFunction: () -> Int
@@ -32,8 +31,8 @@ struct AnyKey : Hashable {
     }
     
     var hashValue: Int { return hashValueFunction() }
-}
 
-func == (x: AnyKey, y: AnyKey) -> Bool {
-    return x.equalityFunction(y.key)
+    static func ==(x: AnyKey, y: AnyKey) -> Bool {
+        return x.equalityFunction(y.key)
+    }
 }
