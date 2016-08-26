@@ -24,28 +24,17 @@ public class KituraCache {
     private let checkFrequency: UInt
     public private(set) var statistics: Statistics
 
-    #if os(Linux)
-    private var timer: dispatch_source_t!
-    private let timerQueue: dispatch_queue_t!
-    private let queue: dispatch_queue_t!
-    #else
     private var timer: DispatchSourceTimer?
     private let timerQueue: DispatchQueue
     private let queue: DispatchQueue
-    #endif
     
     public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600) {
         self.defaultTTL = defaultTTL
         self.checkFrequency = checkFrequency
         statistics = Statistics()
         
-        #if os(Linux)
-            queue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT)
-            timerQueue = dispatch_queue_create("", DISPATCH_QUEUE_SERIAL)
-        #else
-            queue =  DispatchQueue(label: "", attributes: [.concurrent])
-            timerQueue =  DispatchQueue(label: "", attributes: [])
-        #endif
+        queue =  DispatchQueue(label: "KituraCache: queue", attributes: [DispatchQueue.Attributes.concurrent])
+        timerQueue =  DispatchQueue(label: "KituraCache: timerQueue")
 
         startDataChecks()
     }
@@ -68,15 +57,9 @@ public class KituraCache {
     public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
         let ttl = withTTL ?? defaultTTL
 
-        #if os(Linux)
-            dispatch_barrier_sync(queue) {
-                self.setCacheObject(object, forKey: key, withTTL: ttl)
-            }
-        #else
-            queue.sync(flags: [.barrier]) {
-                setCacheObject(object, forKey: key, withTTL: ttl)
-            }
-        #endif
+        queue.sync(flags: [.barrier]) {
+            setCacheObject(object, forKey: key, withTTL: ttl)
+        }
     }
     
     private func getCacheObject<T: Hashable>(forKey key: T) -> Any? {
@@ -92,15 +75,9 @@ public class KituraCache {
     
     public func object<T: Hashable>(forKey key: T) -> Any? {
         var object : Any?
-        #if os(Linux)
-            dispatch_sync(queue) {
-                object = self.getCacheObject(forKey: key)
-            }
-        #else
-            queue.sync() {
-                object = getCacheObject(forKey: key)
-            }
-        #endif
+        queue.sync() {
+            object = getCacheObject(forKey: key)
+        }
         return object
     }
     
@@ -113,15 +90,9 @@ public class KituraCache {
     }
     
     public func removeObjects<T: Hashable>(forKeys keys: [T]) {
-        #if os(Linux)
-            dispatch_barrier_sync(queue) {
-                self.removeCacheObjects(forKeys: keys)
-            }
-        #else
-            queue.sync(flags: [.barrier]) {
-                removeCacheObjects(forKeys: keys)
-            }
-        #endif
+        queue.sync(flags: [.barrier]) {
+            removeCacheObjects(forKeys: keys)
+        }
     }
 
     private func removeCacheObjects<T: Hashable>(forKeys keys: [T]) {
@@ -133,15 +104,9 @@ public class KituraCache {
     }
     
     public func removeAllObjects() {
-        #if os(Linux)
-            dispatch_barrier_sync(queue) {
-                self.removeAllCacheObjects()
-            }
-        #else
-            queue.sync(flags: [.barrier]) {
-                removeAllCacheObjects()
-            }
-        #endif
+        queue.sync(flags: [.barrier]) {
+            removeAllCacheObjects()
+        }
     }
     
     private func removeAllCacheObjects() {
@@ -151,15 +116,9 @@ public class KituraCache {
     
     public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
         var success = false
-        #if os(Linux)
-            dispatch_barrier_sync(queue) {
-                success = self.setCacheObjectTTL(ttl, forKey: key)
-            }
-        #else
-            queue.sync(flags: [.barrier]) {
-                success = setCacheObjectTTL(ttl, forKey: key)
-            }
-        #endif
+        queue.sync(flags: [.barrier]) {
+            success = setCacheObjectTTL(ttl, forKey: key)
+        }
         return success
     }
     
@@ -174,15 +133,9 @@ public class KituraCache {
     
     public func keys() -> [Any] {
         var keys : [Any]?
-        #if os(Linux)
-            dispatch_sync(queue) {
-                keys = self.cacheKeys()
-            }
-        #else
-            queue.sync() {
-                keys = cacheKeys()
-            }
-        #endif
+        queue.sync() {
+            keys = cacheKeys()
+        }
         return keys!
     }
     
@@ -195,15 +148,9 @@ public class KituraCache {
     }
     
     public func flush() {
-        #if os(Linux)
-            dispatch_barrier_sync(queue) {
-                self.flushCache()
-            }
-        #else
-            queue.sync(flags: [.barrier]) {
-                flushCache()
-            }
-        #endif
+        queue.sync(flags: [.barrier]) {
+            flushCache()
+        }
     }
     
     private func flushCache() {
@@ -222,29 +169,6 @@ public class KituraCache {
         }
     }
     
-#if os(Linux)
-    private func startDataChecks() {
-        timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, timerQueue)
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkFrequency) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
-        dispatch_source_set_event_handler(timer) {
-            dispatch_barrier_sync(self.queue) {
-                self.check()
-            }
-        }
-        dispatch_resume(timer)
-    }
-    
-    private func restartDataChecks() {
-        dispatch_suspend(timer)
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, UInt64(checkFrequency) * NSEC_PER_SEC, 1 * NSEC_PER_SEC)
-        dispatch_resume(timer)
-    }
-    
-    private func stopDataChecks() {
-        dispatch_source_cancel(timer)
-        timer = nil
-    }
-#else
     private func startDataChecks() {
         timer = DispatchSource.makeTimerSource(queue: timerQueue)
         timer!.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
@@ -260,7 +184,7 @@ public class KituraCache {
             return
         }
         timer.suspend()
-        timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(UInt64(checkFrequency) * NSEC_PER_SEC))
+        timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency))
         timer.resume()
     }
     
@@ -271,5 +195,4 @@ public class KituraCache {
         timer!.cancel()
         timer = nil
     }
-#endif
 }
