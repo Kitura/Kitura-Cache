@@ -16,7 +16,7 @@
 
 import XCTest
 
-@testable import KituraCacheTestSuite
+@testable import KituraCacheTests
 
 XCTMain([
 	testCase(TestCache.allTests),
