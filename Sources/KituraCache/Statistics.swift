@@ -14,10 +14,19 @@
  * limitations under the License.
  **/
 
+// MARK Statistics
+
+/// The statistics of the cache.
 public struct Statistics {
-    var hits = 0
-    var misses = 0
-    var numberOfKeys = 0
+    
+    /// The number of the cache hits.
+    public internal(set) var hits = 0
+    
+    /// The number of the cache misses.
+    public internal(set) var misses = 0
+    
+    /// The total number of keys in the cache.
+    public internal(set) var numberOfKeys = 0
     
     mutating func reset() {
         hits = 0
