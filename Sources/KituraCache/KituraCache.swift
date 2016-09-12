@@ -17,17 +17,27 @@
 import Foundation
 import Dispatch
 
+// MARK KituraCache
+
+/// Thread-safe in-memory cache.
 public class KituraCache {
     
     private var cache = [AnyKey:CacheObject]()
     private let defaultTTL: UInt
     private let checkFrequency: UInt
+    
+    /// The statistics of the cache.
     public private(set) var statistics: Statistics
 
     private var timer: DispatchSourceTimer?
     private let timerQueue: DispatchQueue
     private let queue: DispatchQueue
     
+    /// Initialize an instance of `KituraCache`.
+    ///
+    /// - Parameter defaultTTL: The default Time to Live value in seconds set for the cache entries which
+    ///                         TTL is not specified otherwise.
+    /// - Parameter checkFrequency: The frequency (in seconds) of the checks for expired entries.
     public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600) {
         self.defaultTTL = defaultTTL
         self.checkFrequency = checkFrequency
@@ -54,6 +64,12 @@ public class KituraCache {
         }
     }
     
+    /// Set the cache object: update the data if the key exists, or add a new entry otherwise.
+    ///
+    /// - Parameter object: The data object.
+    /// - Parameter forKey: The key for the data.
+    /// - Parameter withTTL: The optional Time to Live value in seconds for the entry. If not specified,
+    ///                     the deafult TTL is used.
     public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
         let ttl = withTTL ?? defaultTTL
 
@@ -73,6 +89,10 @@ public class KituraCache {
         }
     }
     
+    /// Retrieve an object from the cache.
+    ///
+    /// - Parameter forKey: The key of the entry to retrieve.
+    /// - Returns: The object stored in the cache for the key.
     public func object<T: Hashable>(forKey key: T) -> Any? {
         var object : Any?
         queue.sync() {
@@ -81,14 +101,23 @@ public class KituraCache {
         return object
     }
     
+    /// Remove an object from the cache.
+    ///
+    /// - Parameter forKey: The key of the entry to remove.
     public func removeObject<T: Hashable>(forKey key: T) {
         removeObjects(forKeys: [key])
     }
     
+    /// Remove objects from the cache.
+    ///
+    /// - Parameter forKeys: The keys of the entries to remove.
     public func removeObjects<T: Hashable>(forKeys keys: T...) {
         removeObjects(forKeys: keys)
     }
     
+    /// Remove objects from the cache.
+    ///
+    /// - Parameter forKeys: An array of the keys of the entries to remove.
     public func removeObjects<T: Hashable>(forKeys keys: [T]) {
         queue.sync(flags: [.barrier]) {
             removeCacheObjects(forKeys: keys)
@@ -103,6 +132,7 @@ public class KituraCache {
         }
     }
     
+    /// Remove all objects from the cache.
     public func removeAllObjects() {
         queue.sync(flags: [.barrier]) {
             removeAllCacheObjects()
@@ -114,6 +144,11 @@ public class KituraCache {
         self.statistics.numberOfKeys = 0
     }
     
+    /// Set the Time to Live value for the cache entry.
+    ///
+    /// - Parameter ttl: The Time to Live value in seconds.
+    /// - Parameter forKey: The key of the entry.
+    /// - Returns: True if the TTL was successfully set, and false if the key doesn't exist.
     public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
         var success = false
         queue.sync(flags: [.barrier]) {
@@ -130,7 +165,9 @@ public class KituraCache {
         return false
     }
 
-    
+    /// Get the cache keys.
+    ///
+    /// - Returns: An array of the cache keys.
     public func keys() -> [Any] {
         var keys : [Any]?
         queue.sync() {
@@ -147,6 +184,7 @@ public class KituraCache {
         return keys
     }
     
+    /// Remove all cache entries and reset the statisics.
     public func flush() {
         queue.sync(flags: [.barrier]) {
             flushCache()
