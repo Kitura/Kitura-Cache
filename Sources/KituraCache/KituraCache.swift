@@ -35,9 +35,9 @@ public class KituraCache {
     
     /// Initialize an instance of `KituraCache`.
     ///
-    /// - Parameter defaultTTL: The default Time to Live value in seconds set for the cache entries which
-    ///                         TTL is not specified otherwise.
-    /// - Parameter checkFrequency: The frequency (in seconds) of the checks for expired entries.
+    /// - Parameter defaultTTL: The default Time to Live value in seconds to use for cache entries for which
+    ///                         the TTL was not specified otherwise.
+    /// - Parameter checkFrequency: The frequency (in seconds) to check for expired entries.
     public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600) {
         self.defaultTTL = defaultTTL
         self.checkFrequency = checkFrequency
@@ -64,12 +64,12 @@ public class KituraCache {
         }
     }
     
-    /// Set the cache object: update the data if the key exists, or add a new entry otherwise.
+    /// Set the cache object, updating the data if the key exists, or adding a new entry otherwise.
     ///
     /// - Parameter object: The data object.
     /// - Parameter forKey: The key for the data.
     /// - Parameter withTTL: The optional Time to Live value in seconds for the entry. If not specified,
-    ///                     the deafult TTL is used.
+    ///                     the default TTL is used.
     public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
         let ttl = withTTL ?? defaultTTL
 
@@ -93,6 +93,7 @@ public class KituraCache {
     ///
     /// - Parameter forKey: The key of the entry to retrieve.
     /// - Returns: The object stored in the cache for the key.
+    /// - Note: The return value will be nil if there is no object in the cache with the specified key.
     public func object<T: Hashable>(forKey key: T) -> Any? {
         var object : Any?
         queue.sync() {
@@ -144,10 +145,10 @@ public class KituraCache {
         self.statistics.numberOfKeys = 0
     }
     
-    /// Set the Time to Live value for the cache entry.
+    /// Set the Time to Live value for a cache entry.
     ///
     /// - Parameter ttl: The Time to Live value in seconds.
-    /// - Parameter forKey: The key of the entry.
+    /// - Parameter forKey: The key of the entry to set its TTL.
     /// - Returns: True if the TTL was successfully set, and false if the key doesn't exist.
     public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
         var success = false
@@ -165,7 +166,7 @@ public class KituraCache {
         return false
     }
 
-    /// Get the cache keys.
+    /// Get all of the keys in the cache.
     ///
     /// - Returns: An array of the cache keys.
     public func keys() -> [Any] {
