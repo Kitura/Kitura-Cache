@@ -11,4 +11,4 @@ readme: README.md
 skip_undocumented: false
 hide_documentation_coverage: false
 
-xcodebuild_arguments: [-project, KituraCache.xcodeproj, -target, KituraCache, -toolchain, org.swift.3020160823a, LIBRARY_SEARCH_PATHS=.build/debug]
+xcodebuild_arguments: [-project, KituraCache.xcodeproj, -target, KituraCache, LIBRARY_SEARCH_PATHS=.build/debug]

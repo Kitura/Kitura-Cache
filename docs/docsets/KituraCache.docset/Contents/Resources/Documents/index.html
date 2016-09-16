@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>KituraCache  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+
+    <a title="KituraCache  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          KituraCache Docs
+        </a>
+         (100% documented)
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/IBM-Swift/Kitura-Cache/">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">KituraCache Reference</a>
+      <img class="carat" src="img/carat.png" />
+      KituraCache  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/KituraCache.html">KituraCache</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Statistics.html">Statistics</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <a href='#kitura-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='kitura-cache'>Kitura-Cache</h1>
+
+<p>Kitura cache</p>
+
+<p><a href="https://travis-ci.org/IBM-Swift/Kitura-Cache"><img src="https://travis-ci.org/IBM-Swift/Kitura.svg?branch=master" alt="Build Status - Master"></a>
+<img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
+<img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
+<img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2"></p>
+<a href='#summary' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='summary'>Summary</h2>
+
+<p>Kitura thread-safe in-memory cache.</p>
+<a href='#api' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='api'>API</h2>
+<a href='#initialization' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='initialization'>Initialization:</h3>
+<pre class="highlight swift"><code>  <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">defaultTTL</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">checkFrequency</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">600</span><span class="p">)</span>
+</code></pre>
+
+<p><strong>Where:</strong>
+   - <em>defaultTTL</em> is the default Time To Live (TTL) of cache entries in seconds, its default value is 0, which means infinity</p>
+
+<ul>
+<li><em>checkFrequency</em> defines the frequency in seconds for checking and removing expired entries</li>
+</ul>
+<a href='#add-or-update-entry-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='add-or-update-entry-in-the-cache'>Add or update entry in the cache</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">setObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Any</span><span class="p">,</span> <span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">withTTL</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
+</code></pre>
+
+<ul>
+<li><em>key</em> has to be <em>Hashable</em></li>
+<li>if TTL is not specified, cache&rsquo;s <em>defaultTTL</em> is used for the entry</li>
+</ul>
+<a href='#retrieve-an-entry-from-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-an-entry-from-the-cache'>Retrieve an entry from the cache</h3>
+<pre class="highlight swift"><code>  <span class="kd">public</span> <span class="kd">func</span> <span class="n">object</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="p">?</span>
+</code></pre>
+
+<ul>
+<li><em>key</em> has to be <em>Hashable</em></li>
+</ul>
+<a href='#delete-entries-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='delete-entries-in-the-cache'>Delete entries in the cache</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObjects</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKeys</span> <span class="nv">keys</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObjects</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKeys</span> <span class="nv">keys</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">])</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeAllObjects</span><span class="p">()</span>
+</code></pre>
+
+<ul>
+<li><em>key/s</em> have to be <em>Hashable</em></li>
+</ul>
+<a href='#set-ttl-of-an-entry-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='set-ttl-of-an-entry-in-the-cache'>Set TTL of an entry in the cache</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">setTTL</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">ttl</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">,</span> <span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+</code></pre>
+
+<ul>
+<li><em>key</em> has to be <em>Hashable</em></li>
+</ul>
+<a href='#retrieve-all-keys' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-all-keys'>Retrieve all keys</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keys</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]?</span>
+</code></pre>
+<a href='#remove-all-values-and-reset-the-statistics-of-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='remove-all-values-and-reset-the-statistics-of-the-cache'>Remove all values and reset the statistics of the cache</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">flush</span><span class="p">()</span>
+</code></pre>
+<a href='#retrieve-cache-statistics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-cache-statistics'>Retrieve cache statistics</h3>
+
+<p>Cache statistics are stored in
+<code>swift
+public private(set) var statistics: Statistics
+</code>
+<strong>Statistics struct contains:</strong>
+   - <em>hits</em> the number of cache hits
+   - <em>misses</em> the number of cache misses
+   - <em>numberOfKeys</em> the total number of keys in the cache</p>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>This library is licensed under Apache 2.0. Full license text is available in <a href="LICENSE.txt">LICENSE</a>.</p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-09-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
