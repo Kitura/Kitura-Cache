@@ -93,7 +93,8 @@ class TestCache : XCTestCase {
     func testTTL() {
         // Without this, the first call to sleep() below
         // sometimes returns immediately, causing the test to fail.
-        usleep(500000)
+        // This seems to be a bug in the Swift 4 snapshots.
+        usleep(5000)
 
         let cache = KituraCache(defaultTTL: 10, checkFrequency: 4)
         cache.setObject(value1, forKey: "key1")
@@ -124,5 +125,4 @@ class TestCache : XCTestCase {
         keys = cache.keys()
         XCTAssertEqual(keys.count, 1)
     }
-    
  }
