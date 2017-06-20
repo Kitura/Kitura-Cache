@@ -91,6 +91,10 @@ class TestCache : XCTestCase {
     }
     
     func testTTL() {
+        // Without this, the first call to sleep() below
+        // sometimes returns immediately, causing the test to fail.
+        usleep(500000)
+
         let cache = KituraCache(defaultTTL: 10, checkFrequency: 4)
         cache.setObject(value1, forKey: "key1")
         cache.setObject(value2, forKey: "key2")
