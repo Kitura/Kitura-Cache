@@ -210,7 +210,13 @@ public class KituraCache {
     
     private func startDataChecks() {
         timer = DispatchSource.makeTimerSource(queue: timerQueue)
-        timer!.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
+
+        #if swift(>=4)
+            timer!.schedule(deadline: DispatchTime.now(), repeating: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
+        #else
+            timer!.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
+        #endif
+
         timer!.setEventHandler() {
             self.queue.sync(flags: [.barrier], execute: self.check)
         }
@@ -223,7 +229,13 @@ public class KituraCache {
             return
         }
         timer.suspend()
-        timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency))
+
+        #if swift(>=4)
+            timer.schedule(deadline: DispatchTime.now(), repeating: Double(checkFrequency))
+        #else
+            timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency))
+        #endif
+
         timer.resume()
     }
     
