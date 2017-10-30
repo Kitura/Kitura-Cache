@@ -2,6 +2,5 @@
 Packages
 .build/*
 build
-.build-ubuntu/*
 .DS_Store
 
