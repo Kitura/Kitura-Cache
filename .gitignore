@@ -1,5 +1,6 @@
-KituraCache.xcodeproj
+*.xcodeproj/*
 Packages
-.build
+.build/*
 build
+.DS_Store
 
