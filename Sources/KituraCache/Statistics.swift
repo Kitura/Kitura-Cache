@@ -19,10 +19,10 @@
 /// The statistics of the cache.
 public struct Statistics {
     
-    /// The number of the cache hits.
+    /// The number of times an object has been successfully accessed from the cache.
     public internal(set) var hits = 0
     
-    /// The number of the cache misses.
+    /// The number of times an entry has been unsuccessfully accessed from the cache. This will be due to the specified key not existing or expiring.
     public internal(set) var misses = 0
     
     /// The total number of keys in the cache.
