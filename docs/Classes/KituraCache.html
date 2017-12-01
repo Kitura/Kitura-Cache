@@ -8,6 +8,9 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
 
@@ -21,6 +24,12 @@
           KituraCache Docs
         </a>
          (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
       </p>
     
         <p class="header-col header-col--secondary">
@@ -50,7 +59,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Structs.html">Structs</a>
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Statistics.html">Statistics</a>
@@ -70,7 +79,7 @@
 
                 </div>
               </div>
-            <p>Thread-safe in-memory cache.</p>
+            <p>A thread-safe, in-memory cache for storing an object with a Hashable key. Time To Live can be specified per entry, or will take a default value specified when the cache is initialised.</p>
 
           </div>
         </section>
@@ -82,9 +91,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11KituraCache11KituraCache10statisticsVS_10Statistics"></a>
+                    <a name="/s:11KituraCacheAAC10statisticsAA10StatisticsVv"></a>
                     <a name="//apple_ref/swift/Property/statistics" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11KituraCache11KituraCache10statisticsVS_10Statistics">statistics</a>
+                    <a class="token" href="#/s:11KituraCacheAAC10statisticsAA10StatisticsVv">statistics</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -92,7 +101,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The statistics of the cache.</p>
+                        <p>The <code><a href="../Structs/Statistics.html">Statistics</a></code> of the cache.</p>
 
                       </div>
                       <div class="declaration">
@@ -109,9 +118,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCachecFT10defaultTTLSu14checkFrequencySu_S0_"></a>
+                    <a name="/s:11KituraCacheAACABSu10defaultTTL_Su14checkFrequencytcfc"></a>
                     <a name="//apple_ref/swift/Method/init(defaultTTL:checkFrequency:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCachecFT10defaultTTLSu14checkFrequencySu_S0_">init(defaultTTL:checkFrequency:)</a>
+                    <a class="token" href="#/s:11KituraCacheAACABSu10defaultTTL_Su14checkFrequencytcfc">init(defaultTTL:checkFrequency:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -119,20 +128,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialize an instance of <code>KituraCache</code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter defaultTTL: The default Time to Live value in seconds to use for cache entries for which
-                    the TTL was not specified otherwise.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter checkFrequency: The frequency (in seconds) to check for expired entries.
-
-</div>
+                        <p>Initialize an instance of KituraCache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">(</span><span class="n">defaultTTL</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span> <span class="nv">checkFrequency</span><span class="p">:</span> <span class="mi">600</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -155,8 +154,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The default Time to Live value in seconds to use for cache entries for which the TTL was not specified otherwise.</p>
-
+                                  <p>The default Time to Live value (in seconds). Used for cache entries for which the TTL is not specified otherwise. If it is not specified here, the default value is 0 which maps to infinity.</p>
                                 </div>
                               </td>
                             </tr>
@@ -168,8 +166,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The frequency (in seconds) to check for expired entries.</p>
-
+                                  <p>The frequency (in seconds) to check for expired entries. If it is not specified here, the default value is 600 (10 minutes).</p>
                                 </div>
                               </td>
                             </tr>
@@ -179,12 +176,23 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Adding%20objects%20to%20the%20cache."></a>
+                <a name="//apple_ref/swift/Section/Adding objects to the cache." class="dashAnchor"></a>
+                <a href="#/Adding%20objects%20to%20the%20cache.">
+                  <h3 class="section-name">Adding objects to the cache.</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache9setObjectuRxs8HashablerFTP_6forKeyx7withTTLGSqSu__T_"></a>
+                    <a name="/s:11KituraCacheAAC9setObjectyyp_x6forKeySuSg7withTTLts8HashableRzlF"></a>
                     <a name="//apple_ref/swift/Method/setObject(_:forKey:withTTL:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache9setObjectuRxs8HashablerFTP_6forKeyx7withTTLGSqSu__T_">setObject(_:forKey:withTTL:)</a>
+                    <a class="token" href="#/s:11KituraCacheAAC9setObjectyyp_x6forKeySuSg7withTTLts8HashableRzlF">setObject(_:forKey:withTTL:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -192,26 +200,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the cache object, updating the data if the key exists, or adding a new entry otherwise.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter object: The data object.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKey: The key for the data.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter withTTL: The optional Time to Live value in seconds for the entry. If not specified,
-                the default TTL is used.
-
-</div>
+                        <p>Set the cache object. Adds a new entry or updates the data if the key already exists in the cache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, item is an instance of a struct object with an id field which conforms to Hashable.</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">setObject</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -235,7 +230,6 @@
                               <td>
                                 <div>
                                   <p>The data object.</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -247,8 +241,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key for the data.</p>
-
+                                  <p>The Hashable key for the data.</p>
                                 </div>
                               </td>
                             </tr>
@@ -260,8 +253,8 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The optional Time to Live value in seconds for the entry. If not specified, the default TTL is used.</p>
-
+                                  <p>The optional Time to Live value (in seconds) for the entry. If not specified,
+                 the default TTL is used.</p>
                                 </div>
                               </td>
                             </tr>
@@ -271,12 +264,23 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Retrieving%20objects%20from%20the%20cache."></a>
+                <a name="//apple_ref/swift/Section/Retrieving objects from the cache." class="dashAnchor"></a>
+                <a href="#/Retrieving%20objects%20from%20the%20cache.">
+                  <h3 class="section-name">Retrieving objects from the cache.</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache6objectuRxs8HashablerFT6forKeyx_GSqP__"></a>
+                    <a name="/s:11KituraCacheAAC6objectypSgx6forKey_ts8HashableRzlF"></a>
                     <a name="//apple_ref/swift/Method/object(forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache6objectuRxs8HashablerFT6forKeyx_GSqP__">object(forKey:)</a>
+                    <a class="token" href="#/s:11KituraCacheAAC6objectypSgx6forKey_ts8HashableRzlF">object(forKey:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -284,20 +288,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Retrieve an object from the cache.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKey: The key of the entry to retrieve.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    The object stored in the cache for the key.
-
-</div>
-
+                        <p>Retrieve an object from the cache for a specified key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, item has been stored in the cache with an Int key</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="nf">object</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Object with key of 1 retrieved from cache.</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="c1">//No object stored in cache with key of 1.</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     The return value will be nil if there is no object in the cache with the specified key.
@@ -325,8 +329,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key of the entry to retrieve.</p>
-
+                                  <p>The key of the entry to retrieve from the cache.</p>
                                 </div>
                               </td>
                             </tr>
@@ -335,8 +338,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The object stored in the cache for the key.</p>
-
+                        <p>The object stored in the cache for the specified key.</p>
                       </div>
                     </section>
                   </div>
@@ -344,9 +346,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache12removeObjectuRxs8HashablerFT6forKeyx_T_"></a>
-                    <a name="//apple_ref/swift/Method/removeObject(forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache12removeObjectuRxs8HashablerFT6forKeyx_T_">removeObject(forKey:)</a>
+                    <a name="/s:11KituraCacheAAC4keysSayypGyF"></a>
+                    <a name="//apple_ref/swift/Method/keys()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11KituraCacheAAC4keysSayypGyF">keys()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -354,13 +356,60 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Remove an object from the cache.</p>
+                        <p>Get all of the keys in the cache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="k">let</span> <span class="nv">allKeys</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="nf">keys</span><span class="p">()</span>
+</code></pre>
 
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKey: The key of the entry to remove.
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keys</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]</span></code></pre>
 
-</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of the cache keys.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Removing%20objects%20from%20the%20cache."></a>
+                <a name="//apple_ref/swift/Section/Removing objects from the cache." class="dashAnchor"></a>
+                <a href="#/Removing%20objects%20from%20the%20cache.">
+                  <h3 class="section-name">Removing objects from the cache.</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11KituraCacheAAC12removeObjectyx6forKey_ts8HashableRzlF"></a>
+                    <a name="//apple_ref/swift/Method/removeObject(forKey:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11KituraCacheAAC12removeObjectyx6forKey_ts8HashableRzlF">removeObject(forKey:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove an object from the cache for a specified key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, objects have been stored in the cache with an Int key</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">removeObject</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -383,8 +432,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key of the entry to remove.</p>
-
+                                  <p>The key of the entry to remove from the cache.</p>
                                 </div>
                               </td>
                             </tr>
@@ -397,9 +445,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache13removeObjectsuRxs8HashablerFt7forKeysGSax__T_"></a>
+                    <a name="/s:11KituraCacheAAC13removeObjectsySayxG7forKeysd_ts8HashableRzlF"></a>
                     <a name="//apple_ref/swift/Method/removeObjects(forKeys:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache13removeObjectsuRxs8HashablerFt7forKeysGSax__T_">removeObjects(forKeys:)</a>
+                    <a class="token" href="#/s:11KituraCacheAAC13removeObjectsySayxG7forKeysd_ts8HashableRzlF">removeObjects(forKeys:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -407,13 +455,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Remove objects from the cache.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKeys: The keys of the entries to remove.
-
-</div>
+                        <p>Remove objects from the cache for multiple, specified keys.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, objects have been stored in the cache with an Int key</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -437,7 +485,6 @@
                               <td>
                                 <div>
                                   <p>The keys of the entries to remove.</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -450,9 +497,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache13removeObjectsuRxs8HashablerFT7forKeysGSax__T_"></a>
+                    <a name="/s:11KituraCacheAAC13removeObjectsySayxG7forKeys_ts8HashableRzlF"></a>
                     <a name="//apple_ref/swift/Method/removeObjects(forKeys:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache13removeObjectsuRxs8HashablerFT7forKeysGSax__T_">removeObjects(forKeys:)</a>
+                    <a class="token" href="#/s:11KituraCacheAAC13removeObjectsySayxG7forKeys_ts8HashableRzlF">removeObjects(forKeys:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -460,13 +507,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Remove objects from the cache.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKeys: An array of the keys of the entries to remove.
-
-</div>
+                        <p>Remove objects from the cache for multiple, specified keys provided in an array.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, objects have been stored in the cache with an Int key</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -489,8 +536,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>An array of the keys of the entries to remove.</p>
-
+                                  <p>An array of keys of the entries to remove.</p>
                                 </div>
                               </td>
                             </tr>
@@ -503,9 +549,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache16removeAllObjectsFT_T_"></a>
+                    <a name="/s:11KituraCacheAAC16removeAllObjectsyyF"></a>
                     <a name="//apple_ref/swift/Method/removeAllObjects()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache16removeAllObjectsFT_T_">removeAllObjects()</a>
+                    <a class="token" href="#/s:11KituraCacheAAC16removeAllObjectsyyF">removeAllObjects()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -514,6 +560,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Remove all objects from the cache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">removAlleObjects</span><span class="p">()</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -527,12 +578,23 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Changing%20TTL%20for%20an%20entry."></a>
+                <a name="//apple_ref/swift/Section/Changing TTL for an entry." class="dashAnchor"></a>
+                <a href="#/Changing%20TTL%20for%20an%20entry.">
+                  <h3 class="section-name">Changing TTL for an entry.</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache6setTTLuRxs8HashablerFTSu6forKeyx_Sb"></a>
+                    <a name="/s:11KituraCacheAAC6setTTLSbSu_x6forKeyts8HashableRzlF"></a>
                     <a name="//apple_ref/swift/Method/setTTL(_:forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache6setTTLuRxs8HashablerFTSu6forKeyx_Sb">setTTL(_:forKey:)</a>
+                    <a class="token" href="#/s:11KituraCacheAAC6setTTLSbSu_x6forKeyts8HashableRzlF">setTTL(_:forKey:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -540,25 +602,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the Time to Live value for a cache entry.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter ttl: The Time to Live value in seconds.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter forKey: The key of the entry to set its TTL.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    True if the TTL was successfully set, and false if the key doesn&rsquo;t exist.
-
-</div>
+                        <p>Set the Time to Live value (in seconds) for a cache entry.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="c1">//In this case, objects have been stored in the cache with an Int key</span>
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">setTTL</span><span class="p">(</span><span class="nv">ttl</span><span class="p">:</span> <span class="mi">360</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -582,7 +632,6 @@
                               <td>
                                 <div>
                                   <p>The Time to Live value in seconds.</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -594,8 +643,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key of the entry to set its TTL.</p>
-
+                                  <p>The key specifying which entry to set the TTL.</p>
                                 </div>
                               </td>
                             </tr>
@@ -604,56 +652,28 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>True if the TTL was successfully set, and false if the key doesn’t exist.</p>
-
+                        <p>True if the TTL was set successfully. False if the key doesn&rsquo;t exist.</p>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Resetting%20the%20cache."></a>
+                <a name="//apple_ref/swift/Section/Resetting the cache." class="dashAnchor"></a>
+                <a href="#/Resetting%20the%20cache.">
+                  <h3 class="section-name">Resetting the cache.</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11KituraCache11KituraCache4keysFT_GSaP__"></a>
-                    <a name="//apple_ref/swift/Method/keys()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache4keysFT_GSaP__">keys()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get all of the keys in the cache.</p>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    An array of the cache keys.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keys</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>An array of the cache keys.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11KituraCache11KituraCache5flushFT_T_"></a>
+                    <a name="/s:11KituraCacheAAC5flushyyF"></a>
                     <a name="//apple_ref/swift/Method/flush()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11KituraCache11KituraCache5flushFT_T_">flush()</a>
+                    <a class="token" href="#/s:11KituraCacheAAC5flushyyF">flush()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -661,7 +681,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Remove all cache entries and reset the statisics.</p>
+                        <p>Remove all cache entries and reset the cache statistics.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">cache</span><span class="o">.</span><span class="nf">flush</span><span class="p">()</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -683,8 +708,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-09-22)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-12-01)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

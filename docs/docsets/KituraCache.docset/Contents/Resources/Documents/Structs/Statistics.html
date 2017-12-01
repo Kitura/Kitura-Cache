@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Statistics Struct Reference</title>
+    <title>Statistics Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
 
     <a name="//apple_ref/swift/Struct/Statistics" class="dashAnchor"></a>
 
-    <a title="Statistics Struct Reference"></a>
+    <a title="Statistics Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -21,6 +24,12 @@
           KituraCache Docs
         </a>
          (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
       </p>
     
         <p class="header-col header-col--secondary">
@@ -35,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">KituraCache Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Statistics Struct Reference
+      Statistics Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -50,7 +59,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Structs.html">Structs</a>
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Statistics.html">Statistics</a>
@@ -82,9 +91,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV11KituraCache10Statistics4hitsSi"></a>
+                    <a name="/s:11KituraCache10StatisticsV4hitsSiv"></a>
                     <a name="//apple_ref/swift/Property/hits" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV11KituraCache10Statistics4hitsSi">hits</a>
+                    <a class="token" href="#/s:11KituraCache10StatisticsV4hitsSiv">hits</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -92,7 +101,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The number of the cache hits.</p>
+                        <p>The number of times an object has been successfully accessed from the cache.</p>
 
                       </div>
                       <div class="declaration">
@@ -109,9 +118,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV11KituraCache10Statistics6missesSi"></a>
+                    <a name="/s:11KituraCache10StatisticsV6missesSiv"></a>
                     <a name="//apple_ref/swift/Property/misses" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV11KituraCache10Statistics6missesSi">misses</a>
+                    <a class="token" href="#/s:11KituraCache10StatisticsV6missesSiv">misses</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -119,7 +128,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The number of the cache misses.</p>
+                        <p>The number of times an entry has been unsuccessfully accessed from the cache. This will be due to the specified key not existing or expiring.</p>
 
                       </div>
                       <div class="declaration">
@@ -136,9 +145,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV11KituraCache10Statistics12numberOfKeysSi"></a>
+                    <a name="/s:11KituraCache10StatisticsV12numberOfKeysSiv"></a>
                     <a name="//apple_ref/swift/Property/numberOfKeys" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV11KituraCache10Statistics12numberOfKeysSi">numberOfKeys</a>
+                    <a class="token" href="#/s:11KituraCache10StatisticsV12numberOfKeysSiv">numberOfKeys</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -168,8 +177,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-09-22)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-12-01)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
