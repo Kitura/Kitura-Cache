@@ -16,16 +16,16 @@
 
 // MARK Statistics
 
-/// The statistics of the cache.
+/// Statistics about the cache.
 public struct Statistics {
     
-    /// The number of times an object has been successfully accessed from the cache.
+    /// The total number of times an access attempt successfully retrieved an entry from the cache.
     public internal(set) var hits = 0
     
-    /// The number of times an entry has been unsuccessfully accessed from the cache. This will be due to the specified key not existing or expiring.
+    /// The total number of times an access attempt was unable to retrieve an entry in the cache for the specified key.
     public internal(set) var misses = 0
     
-    /// The total number of keys in the cache.
+    /// The total number of entries curently in the cache.
     public internal(set) var numberOfKeys = 0
     
     mutating func reset() {

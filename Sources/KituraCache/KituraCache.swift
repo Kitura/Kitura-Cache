@@ -19,14 +19,14 @@ import Dispatch
 
 // MARK KituraCache
 
-/// A thread-safe, in-memory cache for storing an object with a Hashable key. Time To Live can be specified per entry, or will take a default value specified when the cache is initialised.
+/// A thread-safe, in-memory cache for storing an object against a `Hashable` key.
 public class KituraCache {
     
     private var cache = [AnyKey:CacheObject]()
     private let defaultTTL: UInt
     private let checkFrequency: UInt
     
-    /// The `Statistics` of the cache.
+    /// `Statistics` about the cache.
     public private(set) var statistics: Statistics
 
     private var timer: DispatchSourceTimer?
@@ -39,11 +39,11 @@ public class KituraCache {
      ````swift
      let cache = KituraCache(defaultTTL: 3600, checkFrequency: 600)
      ````
-     - Parameter defaultTTL: The default Time to Live value (in seconds). Used for cache entries for which the TTL is not specified otherwise. If it is not specified here, the default value is 0 which maps to infinity.
-     - Parameter checkFrequency: The frequency (in seconds) to check for expired entries. If it is not specified here, the default value is 600 (10 minutes).
+     - Parameter defaultTTL: The Time to Live value (in seconds) of an entry if a TTL value is not specified when the entry is later added. If the default TTL is not defined during this initialisation, entries in the cache are configured to not expire.
+     - Parameter checkFrequency: The frequency (in seconds) to check for expired entries. If the frequency is not specified here, the check will occur every 10 minutes.
      */
     
-    public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600) {
+    public init(defaultTTL: UInt = 0, checkFrequency: UInt = 60) {
         self.defaultTTL = defaultTTL
         self.checkFrequency = checkFrequency
         statistics = Statistics()
@@ -72,16 +72,17 @@ public class KituraCache {
     //MARK: Adding objects to the cache.
     
     /**
-     Set the cache object. Adds a new entry or updates the data if the key already exists in the cache.
+     Adds a new entry or updates the existing entry if the key is already associated with an object in the cache. The lifespan of the entry (in seconds) in the cache can be set using the optional withTTL parameter.
      ### Usage Example: ###
      ````swift
-     //In this case, item is an instance of a struct object with an id field which conforms to Hashable.
+     //In this example, item is an instance of a struct object
+     // with an id field which conforms to Hashable.
      let cache = KituraCache()
      ...
      cache.setObject(item, forKey: item.id)
      ````
-     - Parameter object: The data object.
-     - Parameter forKey: The Hashable key for the data.
+     - Parameter object: The object to store in the cache.
+     - Parameter forKey: The `Hashable` key to be associated with the object.
      - Parameter withTTL: The optional Time to Live value (in seconds) for the entry. If not specified,
                           the default TTL is used.
      */
@@ -110,7 +111,7 @@ public class KituraCache {
      Retrieve an object from the cache for a specified key.
      ### Usage Example: ###
      ````swift
-     //In this case, item has been stored in the cache with an Int key
+     //In this example, item has been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      if let item = cache.object(forKey: 1) {
@@ -124,7 +125,7 @@ public class KituraCache {
      ````
      - Parameter forKey: The key of the entry to retrieve from the cache.
      - Returns: The object stored in the cache for the specified key.
-     - Note: The return value will be nil if there is no object in the cache with the specified key.
+     - Note: The return value will be `nil` if there is no object in the cache with the specified key.
      */
     public func object<T: Hashable>(forKey key: T) -> Any? {
         var object : Any?
@@ -135,14 +136,14 @@ public class KituraCache {
     }
     
     /**
-     Get all of the keys in the cache.
+     Retrieve all of the keys present in the cache.
      ### Usage Example: ###
      ````swift
      let cache = KituraCache()
      ...
      let allKeys = cache.keys()
      ````
-     - Returns: An array of the cache keys.
+     - Returns: An array of all the keys present in the cache.
      */
     public func keys() -> [Any] {
         var keys : [Any]?
@@ -166,12 +167,12 @@ public class KituraCache {
      Remove an object from the cache for a specified key.
      ### Usage Example: ###
      ````swift
-     //In this case, objects have been stored in the cache with an Int key
+     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObject(forKey: 1)
      ````
-     - Parameter forKey: The key of the entry to remove from the cache.
+     - Parameter forKey: The key associated with the entry you want to remove from the cache.
      */
     public func removeObject<T: Hashable>(forKey key: T) {
         removeObjects(forKeys: [key])
@@ -181,12 +182,12 @@ public class KituraCache {
      Remove objects from the cache for multiple, specified keys.
      ### Usage Example: ###
      ````swift
-     //In this case, objects have been stored in the cache with an Int key
+     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObjects(forKeys: 1, 2, 3)
      ````
-     - Parameter forKeys: The keys of the entries to remove.
+     - Parameter forKeys: The keys associated with the entries you want to remove.
      */
     public func removeObjects<T: Hashable>(forKeys keys: T...) {
         removeObjects(forKeys: keys)
@@ -196,12 +197,12 @@ public class KituraCache {
      Remove objects from the cache for multiple, specified keys provided in an array.
      ### Usage Example: ###
      ````swift
-     //In this case, objects have been stored in the cache with an Int key
+     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObjects(forKeys: [1, 2, 3])
      ````
-     - Parameter forKeys: An array of keys of the entries to remove.
+     - Parameter forKeys: An array of keys associated with the entries you want to remove.
      */
     public func removeObjects<T: Hashable>(forKeys keys: [T]) {
         queue.sync(flags: [.barrier]) {
@@ -223,7 +224,7 @@ public class KituraCache {
      ````swift
      let cache = KituraCache()
      ...
-     cache.removAlleObjects()
+     cache.removeAllObjects()
      ````
      */
     public func removeAllObjects() {
