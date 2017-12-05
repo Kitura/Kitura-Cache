@@ -1,12 +1,12 @@
 <p align="center">
     <a href="http://kitura.io/">
-        <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" width="120" alt="Kitura">
+        <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
     </a>
 </p>
 
 
 <p align="center">
-    <a href="http://www.kitura.io/en/api/">
+    <a href="http://www.kitura.io/">
     <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
     </a>
     <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
