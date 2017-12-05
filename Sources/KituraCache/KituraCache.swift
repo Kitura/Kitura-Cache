@@ -81,7 +81,7 @@ public class KituraCache {
      cache.setObject(item, forKey: item.id)
      ````
      - Parameter object: The object to store in the cache.
-     - Parameter forKey: The `Hashable` key to be associated with the object.
+     - Parameter forKey: The `Hashable` key to be associated with the entry.
      - Parameter withTTL: The optional Time to Live value (in seconds) for the entry. If not specified,
                           the default TTL is used.
      */
@@ -122,7 +122,7 @@ public class KituraCache {
          ...
      }
      ````
-     - Parameter forKey: The key of the entry to retrieve from the cache.
+     - Parameter forKey: The key associated with the entry you want to retrieve.
      - Returns: The object stored in the cache for the specified key.
      - Note: The return value will be `nil` if there is no object in the cache with the specified key.
      */

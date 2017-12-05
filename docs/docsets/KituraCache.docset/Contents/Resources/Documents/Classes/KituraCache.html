@@ -242,7 +242,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code>Hashable</code> key to be associated with the object.</p>
+                                  <p>The <code>Hashable</code> key to be associated with the entry.</p>
                                 </div>
                               </td>
                             </tr>
@@ -292,7 +292,7 @@
                         <p>Retrieve an object from the cache for a specified key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, item has been stored in the cache with an Int key</p>
+<p>In this example, item has been stored in the cache with an integer key</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="k">if</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="nf">object</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
@@ -331,7 +331,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key of the entry to retrieve from the cache.</p>
+                                  <p>The <code>Hashable</code> key associated with the entry you want to retrieve.</p>
                                 </div>
                               </td>
                             </tr>
@@ -408,7 +408,7 @@
                         <p>Remove an object from the cache for a specified key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, objects have been stored in the cache with an Int key</p>
+<p>In this example, objects have been stored in the cache with an integer key</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObject</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
@@ -461,7 +461,7 @@
                         <p>Remove objects from the cache for multiple, specified keys.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, objects have been stored in the cache with an Int key</p>
+<p>In this example, objects have been stored in the cache with an integer key</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -514,7 +514,7 @@
                         <p>Remove objects from the cache for multiple, specified keys provided in an array.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, objects have been stored in the cache with an Int key</p>
+<p>In this example, objects have been stored in the cache with an integer key</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
@@ -610,7 +610,7 @@
                         <p>Set the Time to Live value (in seconds) for a cache entry.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, objects have been stored in the cache with an Int key</p>
+<p>In this example, objects have been stored in the cache with an integer key</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">setTTL</span><span class="p">(</span><span class="nv">ttl</span><span class="p">:</span> <span class="mi">360</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>

@@ -1,13 +1,24 @@
-[![Kitura](https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Documentation/KituraLogo-wide.png)](http://kitura.io/)
+<p align="center">
+    <a href="http://kitura.io/">
+        <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" width="120" alt="Kitura">
+    </a>
+</p>
 
-[![Docs](https://img.shields.io/badge/read%20our-docs-1FBCE4.svg)](http://www.kitura.io/en/api/)
-[![Build Status - Master](https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master)](https://travis-ci.org/IBM-Swift/Kitura-Cache)
-![Mac OS X](https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat)
-![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)
-![Apache 2](https://img.shields.io/badge/license-Apache2-blue.svg?style=flat)
-[![Slack Status](http://swift-at-ibm-slack.mybluemix.net/badge.svg)](http://swift-at-ibm-slack.mybluemix.net/)
-[![GitHub stars](https://img.shields.io/github/stars/IBM-Swift/Kitura.svg?style=social&label=Star)](https://github.com/IBM-Swift/Kitura)
 
+<p align="center">
+    <a href="http://www.kitura.io/en/api/">
+    <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
+    </a>
+    <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
+    <img src="https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
+    </a>
+    <img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
+    <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
+    <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
+    <a href="http://swift-at-ibm-slack.mybluemix.net/">
+    <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
+    </a>
+</p>
 # KituraCache
 
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.

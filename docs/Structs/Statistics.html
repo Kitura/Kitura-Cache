@@ -102,6 +102,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The total number of times an access attempt successfully retrieved an entry from the cache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+ <span class="o">...</span>
+ <span class="k">let</span> <span class="nv">numHits</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">hits</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -129,6 +134,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The total number of times an access attempt was unable to retrieve an entry in the cache.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="k">let</span> <span class="nv">numMisses</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">misses</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -155,7 +165,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The total number of entries curently in the cache.</p>
+                        <p>The total number of entries curently in the cache.
+ ### Usage Example: ###</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+ <span class="o">...</span>
+ <span class="k">let</span> <span class="nv">numKeys</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">numberOfKeys</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
