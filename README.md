@@ -6,7 +6,7 @@
 ![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)
 ![Apache 2](https://img.shields.io/badge/license-Apache2-blue.svg?style=flat)
 [![Slack Status](http://swift-at-ibm-slack.mybluemix.net/badge.svg)](http://swift-at-ibm-slack.mybluemix.net/)
-[![GitHub stars](https://img.shields.io/github/stars/IBM-Swift/Kitura.svg?style=social&label=Stars)](https://github.com/IBM-Swift/Kitura)
+[![GitHub stars](https://img.shields.io/github/stars/IBM-Swift/Kitura.svg?style=social&label=Star)](https://github.com/IBM-Swift/Kitura)
 
 # KituraCache
 
@@ -18,14 +18,15 @@ import KituraCache
 
 let cache = KituraCache()
 ```
-If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed. To learn more about how to configure the cache further, refer to `KituraCache.init(...)`.
+If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed.
 
 
 **To add an entry to the cache, or update an entry if the key already exists:**
+
+In the following examples, item is a`struct` with an integer id field.
 ```swift
 cache.setObject(item, forKey: item.id)
 ```
-In the above example, item is a struct and its id field conforms to Hashable.
 
 
 **To retrieve an entry from the cache:**
@@ -47,7 +48,6 @@ else {
 ```swift
 cache.removeObject(forKey: 1)
 ```
-In the above cases, entries have been stored in the cache with integer keys. To delete multiple entries at once, refer to `KituraCache`.
 
 
 **To reset the cache and its `Statistics`:**
@@ -55,7 +55,7 @@ In the above cases, entries have been stored in the cache with integer keys. To 
 cache.flush()
 ```
 
-Refer to `KituraCache` and  `Statistics` for more information about
+_Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information and further configuration._
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).

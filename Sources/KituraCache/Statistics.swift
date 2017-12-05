@@ -22,7 +22,7 @@ public struct Statistics {
     /// The total number of times an access attempt successfully retrieved an entry from the cache.
     public internal(set) var hits = 0
     
-    /// The total number of times an access attempt was unable to retrieve an entry in the cache for the specified key.
+    /// The total number of times an access attempt was unable to retrieve an entry in the cache.
     public internal(set) var misses = 0
     
     /// The total number of entries curently in the cache.

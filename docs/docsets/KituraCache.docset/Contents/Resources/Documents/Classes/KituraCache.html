@@ -180,10 +180,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Adding%20objects%20to%20the%20cache."></a>
-                <a name="//apple_ref/swift/Section/Adding objects to the cache." class="dashAnchor"></a>
-                <a href="#/Adding%20objects%20to%20the%20cache.">
-                  <h3 class="section-name">Adding objects to the cache.</h3>
+                <a name="/Adding%20objects"></a>
+                <a name="//apple_ref/swift/Section/Adding objects" class="dashAnchor"></a>
+                <a href="#/Adding%20objects">
+                  <h3 class="section-name">Adding objects</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -202,9 +202,9 @@
                       <div class="abstract">
                         <p>Adds a new entry or updates the existing entry if the key is already associated with an object in the cache. The lifespan of the entry (in seconds) in the cache can be set using the optional withTTL parameter.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this example, item is an instance of a struct object</span>
-<span class="c1">// with an id field which conforms to Hashable.</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, item is an instance of a struct object with an id field which conforms to Hashable.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">setObject</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </code></pre>
@@ -269,10 +269,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Retrieving%20objects%20from%20the%20cache."></a>
-                <a name="//apple_ref/swift/Section/Retrieving objects from the cache." class="dashAnchor"></a>
-                <a href="#/Retrieving%20objects%20from%20the%20cache.">
-                  <h3 class="section-name">Retrieving objects from the cache.</h3>
+                <a name="/Retrieving%20objects"></a>
+                <a name="//apple_ref/swift/Section/Retrieving objects" class="dashAnchor"></a>
+                <a href="#/Retrieving%20objects">
+                  <h3 class="section-name">Retrieving objects</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -291,8 +291,9 @@
                       <div class="abstract">
                         <p>Retrieve an object from the cache for a specified key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this example, item has been stored in the cache with an Int key</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, item has been stored in the cache with an Int key</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="k">if</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="nf">object</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//Object with key of 1 retrieved from cache.</span>
@@ -384,10 +385,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Removing%20objects%20from%20the%20cache."></a>
-                <a name="//apple_ref/swift/Section/Removing objects from the cache." class="dashAnchor"></a>
-                <a href="#/Removing%20objects%20from%20the%20cache.">
-                  <h3 class="section-name">Removing objects from the cache.</h3>
+                <a name="/Removing%20objects"></a>
+                <a name="//apple_ref/swift/Section/Removing objects" class="dashAnchor"></a>
+                <a href="#/Removing%20objects">
+                  <h3 class="section-name">Removing objects</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -406,8 +407,9 @@
                       <div class="abstract">
                         <p>Remove an object from the cache for a specified key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this example, objects have been stored in the cache with an Int key</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, objects have been stored in the cache with an Int key</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObject</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre>
@@ -458,8 +460,9 @@
                       <div class="abstract">
                         <p>Remove objects from the cache for multiple, specified keys.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this example, objects have been stored in the cache with an Int key</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, objects have been stored in the cache with an Int key</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </code></pre>
@@ -510,8 +513,9 @@
                       <div class="abstract">
                         <p>Remove objects from the cache for multiple, specified keys provided in an array.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this example, objects have been stored in the cache with an Int key</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, objects have been stored in the cache with an Int key</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">removeObjects</span><span class="p">(</span><span class="nv">forKeys</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </code></pre>
@@ -583,10 +587,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Changing%20TTL%20for%20an%20entry."></a>
-                <a name="//apple_ref/swift/Section/Changing TTL for an entry." class="dashAnchor"></a>
-                <a href="#/Changing%20TTL%20for%20an%20entry.">
-                  <h3 class="section-name">Changing TTL for an entry.</h3>
+                <a name="/Changing%20TTL%20for%20an%20entry"></a>
+                <a name="//apple_ref/swift/Section/Changing TTL for an entry" class="dashAnchor"></a>
+                <a href="#/Changing%20TTL%20for%20an%20entry">
+                  <h3 class="section-name">Changing TTL for an entry</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -605,8 +609,9 @@
                       <div class="abstract">
                         <p>Set the Time to Live value (in seconds) for a cache entry.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="c1">//In this case, objects have been stored in the cache with an Int key</span>
-<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+
+<p>In this example, objects have been stored in the cache with an Int key</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="n">cache</span><span class="o">.</span><span class="nf">setTTL</span><span class="p">(</span><span class="nv">ttl</span><span class="p">:</span> <span class="mi">360</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre>
@@ -644,7 +649,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The key specifying which entry to set the TTL.</p>
+                                  <p>The key specifying for which entry to set the TTL.</p>
                                 </div>
                               </td>
                             </tr>
@@ -662,10 +667,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Resetting%20the%20cache."></a>
-                <a name="//apple_ref/swift/Section/Resetting the cache." class="dashAnchor"></a>
-                <a href="#/Resetting%20the%20cache.">
-                  <h3 class="section-name">Resetting the cache.</h3>
+                <a name="/Resetting%20the%20cache"></a>
+                <a name="//apple_ref/swift/Section/Resetting the cache" class="dashAnchor"></a>
+                <a href="#/Resetting%20the%20cache">
+                  <h3 class="section-name">Resetting the cache</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -709,7 +714,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-12-04)</p>
+      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-12-05)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

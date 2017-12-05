@@ -69,14 +69,13 @@ public class KituraCache {
         }
     }
     
-    //MARK: Adding objects to the cache.
+    //MARK: Adding objects
     
     /**
      Adds a new entry or updates the existing entry if the key is already associated with an object in the cache. The lifespan of the entry (in seconds) in the cache can be set using the optional withTTL parameter.
      ### Usage Example: ###
+     In this example, item is an instance of a struct object with an id field which conforms to Hashable.
      ````swift
-     //In this example, item is an instance of a struct object
-     // with an id field which conforms to Hashable.
      let cache = KituraCache()
      ...
      cache.setObject(item, forKey: item.id)
@@ -105,13 +104,13 @@ public class KituraCache {
         }
     }
     
-    //MARK: Retrieving objects from the cache.
+    //MARK: Retrieving objects
     
     /**
      Retrieve an object from the cache for a specified key.
      ### Usage Example: ###
+     In this example, item has been stored in the cache with an integer key
      ````swift
-     //In this example, item has been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      if let item = cache.object(forKey: 1) {
@@ -161,13 +160,13 @@ public class KituraCache {
         return keys
     }
     
-    //MARK: Removing objects from the cache.
+    //MARK: Removing objects
     
     /**
      Remove an object from the cache for a specified key.
      ### Usage Example: ###
+     In this example, objects have been stored in the cache with an integer key
      ````swift
-     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObject(forKey: 1)
@@ -181,8 +180,8 @@ public class KituraCache {
     /**
      Remove objects from the cache for multiple, specified keys.
      ### Usage Example: ###
+     In this example, objects have been stored in the cache with an integer key
      ````swift
-     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObjects(forKeys: 1, 2, 3)
@@ -196,8 +195,8 @@ public class KituraCache {
     /**
      Remove objects from the cache for multiple, specified keys provided in an array.
      ### Usage Example: ###
+     In this example, objects have been stored in the cache with an integer key
      ````swift
-     //In this example, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.removeObjects(forKeys: [1, 2, 3])
@@ -238,19 +237,19 @@ public class KituraCache {
         self.statistics.numberOfKeys = 0
     }
     
-    //MARK: Changing TTL for an entry.
+    //MARK: Changing TTL for an entry
     
     /**
      Set the Time to Live value (in seconds) for a cache entry.
      ### Usage Example: ###
+     In this example, objects have been stored in the cache with an integer key
      ````swift
-     //In this case, objects have been stored in the cache with an Int key
      let cache = KituraCache()
      ...
      cache.setTTL(ttl: 360, forKey: 1)
      ````
      - Parameter ttl: The Time to Live value in seconds.
-     - Parameter forKey: The key specifying which entry to set the TTL.
+     - Parameter forKey: The key specifying for which entry to set the TTL.
      - Returns: True if the TTL was set successfully. False if the key doesn't exist.
      */
     public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
@@ -269,7 +268,7 @@ public class KituraCache {
         return false
     }
     
-    //MARK: Resetting the cache.
+    //MARK: Resetting the cache
     
     /**
      Remove all cache entries and reset the cache statistics.
