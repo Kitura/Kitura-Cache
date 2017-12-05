@@ -19,6 +19,7 @@
     <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
     </a>
 </p>
+
 # KituraCache
 
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
