@@ -74,7 +74,7 @@ public class KituraCache {
     /**
      Adds a new entry or updates the existing entry if the key is already associated with an object in the cache. The lifespan of the entry (in seconds) in the cache can be set using the optional withTTL parameter.
      ### Usage Example: ###
-     In this example, item is an instance of a struct object with an id field which conforms to Hashable.
+     In this example, item is an instance of a `struct` object with an id field which conforms to `Hashable`.
      ````swift
      let cache = KituraCache()
      ...
@@ -109,7 +109,7 @@ public class KituraCache {
     /**
      Retrieve an object from the cache for a specified key.
      ### Usage Example: ###
-     In this example, item has been stored in the cache with an integer key
+     In this example, item has been stored in the cache with an integer key.
      ````swift
      let cache = KituraCache()
      ...
@@ -165,7 +165,7 @@ public class KituraCache {
     /**
      Remove an object from the cache for a specified key.
      ### Usage Example: ###
-     In this example, objects have been stored in the cache with an integer key
+     In this example, objects have been stored in the cache with an integer key.
      ````swift
      let cache = KituraCache()
      ...
@@ -180,7 +180,7 @@ public class KituraCache {
     /**
      Remove objects from the cache for multiple, specified keys.
      ### Usage Example: ###
-     In this example, objects have been stored in the cache with an integer key
+     In this example, objects have been stored in the cache with an integer key.
      ````swift
      let cache = KituraCache()
      ...
@@ -195,7 +195,7 @@ public class KituraCache {
     /**
      Remove objects from the cache for multiple, specified keys provided in an array.
      ### Usage Example: ###
-     In this example, objects have been stored in the cache with an integer key
+     In this example, objects have been stored in the cache with an integer key.
      ````swift
      let cache = KituraCache()
      ...
@@ -242,7 +242,7 @@ public class KituraCache {
     /**
      Set the Time to Live value (in seconds) for a cache entry.
      ### Usage Example: ###
-     In this example, objects have been stored in the cache with an integer key
+     In this example, objects have been stored in the cache with an integer key.
      ````swift
      let cache = KituraCache()
      ...

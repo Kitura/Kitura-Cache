@@ -46,12 +46,12 @@ cache.setObject(item, forKey: item.id)
 let cache = KituraCache()
 ...
 if let item = cache.object(forKey: 1) {
-//Object with key of 1 retrieved from cache.
-...
+    //Object with key of 1 retrieved from cache.
+    ...
 }
 else {
-//No object stored in cache with key of 1.
-...
+    //No object stored in cache with key of 1.
+    ...
 }
 ```
 
@@ -67,7 +67,7 @@ cache.removeObject(forKey: 1)
 cache.flush()
 ```
 
-_Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information and further configuration._
+_Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information._
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
