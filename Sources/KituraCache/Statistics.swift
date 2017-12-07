@@ -20,7 +20,7 @@
 public struct Statistics {
     
     /**
-     The total number of times an access attempt successfully retrieved an entry in the cache.
+     The total number of times an access attempt successfully retrieved an entry from the cache.
     ### Usage Example: ###
     ````swift
      let cache = KituraCache()
@@ -31,7 +31,7 @@ public struct Statistics {
     public internal(set) var hits = 0
     
     /**
-     The total number of times an access attempt was unable to retrieve an entry in the cache.
+     The total number of times an access attempt was unable to retrieve an entry from the cache.
     ### Usage Example: ###
     ````swift
     let cache = KituraCache()
@@ -47,7 +47,7 @@ public struct Statistics {
      ````swift
      let cache = KituraCache()
      ...
-     let numMisses = cache.statistics.numberOfKeys
+     let numKeys = cache.statistics.numberOfKeys
      ```
      */
     public internal(set) var numberOfKeys = 0

@@ -39,7 +39,7 @@ public class KituraCache {
      ````swift
      let cache = KituraCache(defaultTTL: 3600, checkFrequency: 600)
      ````
-     - Parameter defaultTTL: The Time to Live value (in seconds) of an entry if a TTL value is not specified when the entry is later added. If the default TTL is not defined during this initialisation, entries in the cache are configured to not expire.
+     - Parameter defaultTTL: The Time to Live value (in seconds) of an entry if a TTL value is not specified when an entry is added later. If the default TTL is not defined during this initialisation, entries in the cache are configured to not expire.
      - Parameter checkFrequency: The frequency (in seconds) to check for expired entries. If the frequency is not specified here, the check will occur every 10 minutes.
      */
     
