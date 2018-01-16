@@ -39,8 +39,8 @@ public class KituraCache {
      ````swift
      let cache = KituraCache(defaultTTL: 3600, checkFrequency: 600)
      ````
-     - Parameter defaultTTL: The Time to Live value (in seconds) of an entry if a TTL value is not specified when an entry is added later. If the default TTL is not defined during this initialisation, entries in the cache are configured to not expire.
-     - Parameter checkFrequency: The frequency (in seconds) to check for expired entries. If the frequency is not specified here, the check will occur every 10 minutes.
+     - Parameter defaultTTL: The Time to Live value (in seconds) used for a new entry if none is specified in `setObject(_:forKey:withTTL:)`. If `defaultTTL` is not specified, a value of 0 (never expire) will be used.
+     - Parameter checkFrequency: The frequency (in seconds) to check for expired entries. If `checkFrequency` is not specified, a value of 600 will be used (the check will occur every 10 minutes).
      */
     
     public init(defaultTTL: UInt = 0, checkFrequency: UInt = 60) {
@@ -123,8 +123,8 @@ public class KituraCache {
      }
      ````
      - Parameter forKey: The key associated with the entry you want to retrieve.
-     - Returns: The object stored in the cache for the specified key.
-     - Note: The return value will be `nil` if there is no object in the cache with the specified key.
+     - Returns: The object stored in the cache for the specified key, or nil if there is no object with the
+                specified key.
      */
     public func object<T: Hashable>(forKey key: T) -> Any? {
         var object : Any?

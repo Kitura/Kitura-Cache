@@ -35,7 +35,7 @@ If no arguments are provided, the default cache will be non-expiring and a check
 
 **To add an entry to the cache, or update an entry if the key already exists:**
 
-In the following examples, item is a`struct` with an integer id field.
+In the following examples, item is a `struct` with an integer id field.
 ```swift
 cache.setObject(item, forKey: item.id)
 ```
