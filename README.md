@@ -1,75 +1,74 @@
-# Kitura-Cache
-Kitura cache
+<p align="center">
+    <a href="http://kitura.io/">
+        <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
+    </a>
+</p>
 
-[![Build Status - Master](https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master)](https://travis-ci.org/IBM-Swift/Kitura-Cache)
-![Mac OS X](https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat)
-![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)
-![Apache 2](https://img.shields.io/badge/license-Apache2-blue.svg?style=flat)
 
-## Summary
-Kitura thread-safe in-memory cache.
+<p align="center">
+    <a href="http://www.kitura.io/">
+    <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
+    </a>
+    <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
+    <img src="https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
+    </a>
+    <img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
+    <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
+    <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
+    <a href="http://swift-at-ibm-slack.mybluemix.net/">
+    <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
+    </a>
+</p>
 
-## API
-### Initialization:
+# KituraCache
 
+`KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
+
+**To use KituraCache, import the package and initialise:**
 ```swift
-  public init(defaultTTL: UInt = 0, checkFrequency: UInt = 600)
+import KituraCache
+
+let cache = KituraCache()
 ```
-**Where:**
-   - *defaultTTL* is the default Time To Live (TTL) of cache entries in seconds, its default value is 0, which means infinity
+If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed.
 
-   - *checkFrequency* defines the frequency in seconds for checking and removing expired entries
 
-### Add or update entry in the cache
+**To add an entry to the cache, or update an entry if the key already exists:**
+
+In the following examples, item is a `struct` with an integer id field.
 ```swift
-public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
-```
- - *key* has to be *Hashable*
- - if TTL is not specified, cache's *defaultTTL* is used for the entry
-
-### Retrieve an entry from the cache
-```swift
-  public func object<T: Hashable>(forKey key: T) -> Any?
-```
-- *key* has to be *Hashable*
-
-### Delete entries in the cache
-```swift
-public func removeObject<T: Hashable>(forKey key: T)
-public func removeObjects<T: Hashable>(forKeys keys: T...)
-public func removeObjects<T: Hashable>(forKeys keys: [T])
-public func removeAllObjects()
-```
-- *key/s* have to be *Hashable*
-
-### Set TTL of an entry in the cache
-```swift
-public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool
-```
-- returns *false* if *key* doesn't exits
-- *key* has to be *Hashable*
-
-### Retrieve all keys
-
-```swift
-public func keys() -> [Any]?
+cache.setObject(item, forKey: item.id)
 ```
 
-### Remove all values and reset the statistics of the cache
 
+**To retrieve an entry from the cache:**
 ```swift
-public func flush()
+let cache = KituraCache()
+...
+if let item = cache.object(forKey: 1) {
+    //Object with key of 1 retrieved from cache.
+    ...
+}
+else {
+    //No object stored in cache with key of 1.
+    ...
+}
 ```
 
-### Retrieve cache statistics
-Cache statistics are stored in
+
+**To delete a single entry, pass the entry's key as a parameter:**
 ```swift
-public private(set) var statistics: Statistics
+cache.removeObject(forKey: 1)
 ```
-**Statistics struct contains:**
-   - *hits* the number of cache hits
-   - *misses* the number of cache misses
-   - *numberOfKeys* the total number of keys in the cache
+
+
+**To reset the cache and its `Statistics`:**
+```swift
+cache.flush()
+```
+
+_Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information._
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
+

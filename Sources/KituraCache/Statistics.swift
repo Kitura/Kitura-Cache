@@ -16,16 +16,40 @@
 
 // MARK Statistics
 
-/// The statistics of the cache.
+/// Statistics about the cache.
 public struct Statistics {
     
-    /// The number of the cache hits.
+    /**
+     The total number of times an access attempt successfully retrieved an entry from the cache.
+    ### Usage Example: ###
+    ````swift
+     let cache = KituraCache()
+     ...
+     let numHits = cache.statistics.hits
+     ```
+    */
     public internal(set) var hits = 0
     
-    /// The number of the cache misses.
+    /**
+     The total number of times an access attempt was unable to retrieve an entry from the cache.
+    ### Usage Example: ###
+    ````swift
+    let cache = KituraCache()
+    ...
+    let numMisses = cache.statistics.misses
+    ```
+    */
     public internal(set) var misses = 0
     
-    /// The total number of keys in the cache.
+    /**
+     The total number of entries currently in the cache.
+     ### Usage Example: ###
+     ````swift
+     let cache = KituraCache()
+     ...
+     let numKeys = cache.statistics.numberOfKeys
+     ```
+     */
     public internal(set) var numberOfKeys = 0
     
     mutating func reset() {

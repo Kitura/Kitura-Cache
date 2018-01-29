@@ -8,6 +8,9 @@
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
 
@@ -20,6 +23,12 @@
           KituraCache Docs
         </a>
          (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
       </p>
     
         <p class="header-col header-col--secondary">
@@ -49,7 +58,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Structs.html">Structs</a>
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Statistics.html">Statistics</a>
@@ -63,77 +72,67 @@
         <section class="section">
           <div class="section-content">
             
-            <a href='#kitura-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='kitura-cache'>Kitura-Cache</h1>
+            <p align="center">
+    <a href="http://kitura.io/">
+        <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
+    </a>
+</p>
 
-<p>Kitura cache</p>
+<p align="center">
+    <a href="http://www.kitura.io/">
+    <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
+    </a>
+    <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
+    <img src="https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
+    </a>
+    <img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
+    <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
+    <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
+    <a href="http://swift-at-ibm-slack.mybluemix.net/">
+    <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
+    </a>
+</p>
+<h1 id='kituracache' class='heading'>KituraCache</h1>
 
-<p><a href="https://travis-ci.org/IBM-Swift/Kitura-Cache"><img src="https://travis-ci.org/IBM-Swift/Kitura.svg?branch=master" alt="Build Status - Master"></a>
-<img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
-<img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
-<img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2"></p>
-<a href='#summary' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='summary'>Summary</h2>
+<p><code><a href="Classes/KituraCache.html">KituraCache</a></code> is an in-memory, thread-safe cache which allows you to store objects against a unique, <a href="https://developer.apple.com/documentation/swift/hashable">Hashable</a> key.</p>
 
-<p>Kitura thread-safe in-memory cache.</p>
-<a href='#api' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='api'>API</h2>
-<a href='#initialization' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='initialization'>Initialization:</h3>
-<pre class="highlight swift"><code>  <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">defaultTTL</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">checkFrequency</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">600</span><span class="p">)</span>
+<p><strong>To use KituraCache, import the package and initialise:</strong></p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">KituraCache</span>
+
+<span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
 </code></pre>
 
-<p><strong>Where:</strong>
-   - <em>defaultTTL</em> is the default Time To Live (TTL) of cache entries in seconds, its default value is 0, which means infinity</p>
+<p>If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed.</p>
 
-<ul>
-<li><em>checkFrequency</em> defines the frequency in seconds for checking and removing expired entries</li>
-</ul>
-<a href='#add-or-update-entry-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='add-or-update-entry-in-the-cache'>Add or update entry in the cache</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">setObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Any</span><span class="p">,</span> <span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">withTTL</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
+<p><strong>To add an entry to the cache, or update an entry if the key already exists:</strong></p>
+
+<p>In the following examples, item is a <code>struct</code> with an integer id field.</p>
+<pre class="highlight swift"><code><span class="n">cache</span><span class="o">.</span><span class="nf">setObject</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </code></pre>
 
-<ul>
-<li><em>key</em> has to be <em>Hashable</em></li>
-<li>if TTL is not specified, cache&rsquo;s <em>defaultTTL</em> is used for the entry</li>
-</ul>
-<a href='#retrieve-an-entry-from-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-an-entry-from-the-cache'>Retrieve an entry from the cache</h3>
-<pre class="highlight swift"><code>  <span class="kd">public</span> <span class="kd">func</span> <span class="n">object</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="p">?</span>
+<p><strong>To retrieve an entry from the cache:</strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cache</span> <span class="o">=</span> <span class="kt">KituraCache</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="nf">object</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Object with key of 1 retrieved from cache.</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="c1">//No object stored in cache with key of 1.</span>
+    <span class="o">...</span>
+<span class="p">}</span>
 </code></pre>
 
-<ul>
-<li><em>key</em> has to be <em>Hashable</em></li>
-</ul>
-<a href='#delete-entries-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='delete-entries-in-the-cache'>Delete entries in the cache</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObjects</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKeys</span> <span class="nv">keys</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">removeObjects</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">forKeys</span> <span class="nv">keys</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">])</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeAllObjects</span><span class="p">()</span>
+<p><strong>To delete a single entry, pass the entry&rsquo;s key as a parameter:</strong></p>
+<pre class="highlight swift"><code><span class="n">cache</span><span class="o">.</span><span class="nf">removeObject</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre>
 
-<ul>
-<li><em>key/s</em> have to be <em>Hashable</em></li>
-</ul>
-<a href='#set-ttl-of-an-entry-in-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='set-ttl-of-an-entry-in-the-cache'>Set TTL of an entry in the cache</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">setTTL</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">ttl</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">,</span> <span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<p><strong>To reset the cache and its <code><a href="Structs/Statistics.html">Statistics</a></code>:</strong></p>
+<pre class="highlight swift"><code><span class="n">cache</span><span class="o">.</span><span class="nf">flush</span><span class="p">()</span>
 </code></pre>
 
-<ul>
-<li><em>key</em> has to be <em>Hashable</em></li>
-</ul>
-<a href='#retrieve-all-keys' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-all-keys'>Retrieve all keys</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keys</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]?</span>
-</code></pre>
-<a href='#remove-all-values-and-reset-the-statistics-of-the-cache' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='remove-all-values-and-reset-the-statistics-of-the-cache'>Remove all values and reset the statistics of the cache</h3>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">flush</span><span class="p">()</span>
-</code></pre>
-<a href='#retrieve-cache-statistics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='retrieve-cache-statistics'>Retrieve cache statistics</h3>
-
-<p>Cache statistics are stored in
-<code>swift
-public private(set) var statistics: Statistics
-</code>
-<strong>Statistics struct contains:</strong>
-   - <em>hits</em> the number of cache hits
-   - <em>misses</em> the number of cache misses
-   - <em>numberOfKeys</em> the total number of keys in the cache</p>
-<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+<p><em>Refer to <a href="https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache">KituraCache</a> and <a href="https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics">Statistics</a> for more information.</em></p>
+<h2 id='license' class='heading'>License</h2>
 
 <p>This library is licensed under Apache 2.0. Full license text is available in <a href="LICENSE.txt">LICENSE</a>.</p>
 
@@ -144,8 +143,8 @@ public private(set) var statistics: Statistics
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-09-22)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
