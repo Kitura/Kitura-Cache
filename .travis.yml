@@ -1,20 +1,44 @@
+# Travis CI build file for Kitura-Cache.
+# Kitura-Cache runs on OS X and Linux (Ubuntu).
+# See the following URLs for further details on Travis CI
+# https://docs.travis-ci.com/user/customizing-the-build/
+# https://docs.travis-ci.com/user/docker/
+# https://docs.travis-ci.com/user/multi-os/
+
+# whitelist (branches that should be built)
 branches:
   only:
     - master
     - /^issue.*$/
 
-notifications:
-  slack:
-    secure: "QMQ7BqKaPjtPUlFHqDsjJoYOWBBAPWrr2z6g8/SFI4kTpkyKDzJwB3cuimxyZvcXb6Yo2DM3+NOnYOEayJAtyBJhLOOK6gH6oBLsm+lHmEJiepVQ5BvYR2lRNAeR0iAbKcy078G6ozxAG+71C98kj+hfk2xB/uJSoXeIWpQZN8SgqUUd9FTX5gaEMVKDr32aC/wEkrG+7THqYxUGmLOE5DYVps34JSkThuS0exxF0s/T3vndXceXYW/srVO3sXfwragVyOj8x7sYOGNtSF9ZwKiGB1EI8S85TYFagse8Attk5aYIfo11HiSL5m3tD4Dthe888jPiz9Fyt3H5QBTsf6hQq5QV3fBC9p0RIM7Ga4pttms70Byo+UOVwq1rNm4MA8p7vq453cIJbAChWQ6/VJE5HRHPzeZaZwQk/dnLFNaqG0Q3DHUwDhK3GCL0vHj63jiaHzhIrVGR/CQsDsnIiO5r13XWnqA/GITjGZC5oH/T53tFdkju1nMDHPM012zz1MtuAg69ZjpmEzxHbpySj3+c6r135pXGuQT9JO7Bkkz1gPrURzccjzc6NlFvFOhjMBw6mI/nLCXgKKTbN9isXDRbsusOREvsW3Iz99qPjZYtr+kPgxgiie1f9B5BLiR7qqMosqesvk84B1qz1wQALinkCrIBZTgKU+wWZMccRcU="
-
+# the matrix of builds should cover each combination of Swift version
+# and platform that is supported. The version of Swift used is specified
+# by .swift-version, unless SWIFT_SNAPSHOT is specified.
 matrix:
   include:
     - os: linux
       dist: trusty
       sudo: required
+      env: SWIFT_SNAPSHOT=4.0.3
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: SWIFT_SNAPSHOT=swift-4.2-DEVELOPMENT-SNAPSHOT-2018-06-19-a
     - os: osx
       osx_image: xcode9.2
       sudo: required
+      env: SWIFT_SNAPSHOT=4.0.3
+    - os: osx
+      osx_image: xcode9.4
+      sudo: required
+      env: JAZZY_ELIGIBLE=true
+    - os: osx
+      osx_image: xcode9.4
+      sudo: required
+      env: SWIFT_SNAPSHOT=swift-4.2-DEVELOPMENT-SNAPSHOT-2018-06-04-a
 
 before_install:
   - git clone https://github.com/IBM-Swift/Package-Builder.git
