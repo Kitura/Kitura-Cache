@@ -73,5 +73,5 @@ cache.flush()
 _Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information._
 
 ## License
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/IBM-Swift/Kitura-Cache/blob/master/LICENSE.txt).
 
