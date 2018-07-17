@@ -12,7 +12,7 @@
     <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
     <img src="https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
     </a>
-    <img src="https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat" alt="Mac OS X">
+    <img src="https://img.shields.io/badge/os-macOS-green.svg?style=flat" alt="macOS">
     <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
     <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
     <a href="http://swift-at-ibm-slack.mybluemix.net/">
@@ -23,6 +23,9 @@
 # KituraCache
 
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
+
+## Swift version
+The latest version of KituraCache requires **Swift 4.0** but recommends usind **4.1.2** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
 
 **To use KituraCache, import the package and initialise:**
 ```swift
