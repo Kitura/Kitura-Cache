@@ -6,8 +6,8 @@
 
 
 <p align="center">
-    <a href="http://www.kitura.io/">
-    <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
+    <a href="https://ibm-swift.github.io/Kitura-Cache/index.html">
+    <img src="https://img.shields.io/badge/apidoc-KituraCache-1FBCE4.svg?style=flat" alt="APIDoc">
     </a>
     <a href="https://travis-ci.org/IBM-Swift/Kitura-Cache">
     <img src="https://travis-ci.org/IBM-Swift/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
@@ -27,10 +27,32 @@
 ## Swift version
 The latest version of KituraCache requires **Swift 4.0** but recommends usind **4.1.2** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
 
-**To use KituraCache, import the package and initialise:**
+## Usage
+
+#### Add dependencies
+
+Add the `Kitura-Cache` package to the dependencies within your application’s `Package.swift` file. Substitute `"x.x.x"` with the latest `Kitura-Cache` [release](https://github.com/IBM-Swift/Kitura-Cache/releases).
+
+```swift
+.package(url: "https://github.com/IBM-Swift/Kitura-Cache.git", from: "x.x.x")
+```
+
+Add `KituraCache` to your target's dependencies:
+
+```swift
+.target(name: "example", dependencies: ["KituraCache"]),
+```
+
+#### Import package
+
 ```swift
 import KituraCache
+```
 
+## Example
+
+**To use KituraCache, add the dependencies and import the package as defined above, then initialize:**
+```swift
 let cache = KituraCache()
 ```
 If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed.
@@ -70,8 +92,12 @@ cache.removeObject(forKey: 1)
 cache.flush()
 ```
 
-_Refer to [KituraCache](https://ibm-swift.github.io/Kitura-Cache/Classes/KituraCache) and [Statistics](https://ibm-swift.github.io/Kitura-Cache/Structs/Statistics) for more information._
+## API Documentation
+For more information visit our [API reference](https://ibm-swift.github.io/Kitura-Cache/index.html).
+
+## Community
+
+We love to talk server-side Swift, and Kitura. Join our [Slack](http://swift-at-ibm-slack.mybluemix.net/) to meet the team!
 
 ## License
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
-
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/IBM-Swift/Kitura-Cache/blob/master/LICENSE.txt).
