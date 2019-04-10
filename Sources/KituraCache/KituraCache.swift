@@ -22,7 +22,7 @@ import Dispatch
 /// A thread-safe, in-memory cache for storing an object against a `Hashable` key.
 public class KituraCache {
     
-    private var cache = [AnyKey:CacheObject]()
+    private var cache = [AnyHashable : CacheObject]()
     private let defaultTTL: UInt
     private let checkFrequency: UInt
     
@@ -59,12 +59,12 @@ public class KituraCache {
     }
     
     private func setCacheObject<T: Hashable>(_ object: Any, forKey key: T, withTTL ttl: UInt) {
-        if let cacheObject = cache[AnyKey(key)] {
+        if let cacheObject = cache[AnyHashable(key)] {
             cacheObject.data = object
             cacheObject.setTTL(ttl)
         }
         else {
-            cache[AnyKey(key)] = CacheObject(data: object, ttl: ttl)
+            cache[AnyHashable(key)] = CacheObject(data: object, ttl: ttl)
             statistics.numberOfKeys += 1
         }
     }
@@ -94,7 +94,7 @@ public class KituraCache {
     }
     
     private func getCacheObject<T: Hashable>(forKey key: T) -> Any? {
-        if let cacheObject = cache[AnyKey(key)], !cacheObject.expired() {
+        if let cacheObject = cache[AnyHashable(key)], !cacheObject.expired() {
             statistics.hits += 1
             return cacheObject.data
         }
@@ -155,7 +155,7 @@ public class KituraCache {
     private func cacheKeys() -> [Any] {
         var keys = [Any]()
         for key in self.cache.keys {
-            keys.append(key.key)
+            keys.append(key.base)
         }
         return keys
     }
@@ -211,7 +211,7 @@ public class KituraCache {
 
     private func removeCacheObjects<T: Hashable>(forKeys keys: [T]) {
         for key in keys {
-            if let _ = cache.removeValue(forKey: AnyKey(key)) {
+            if let _ = cache.removeValue(forKey: AnyHashable(key)) {
                 statistics.numberOfKeys -= 1
             }
         }
@@ -261,7 +261,7 @@ public class KituraCache {
     }
     
     private func setCacheObjectTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
-        if let cacheObject = cache[AnyKey(key)], !cacheObject.expired() {
+        if let cacheObject = cache[AnyHashable(key)], !cacheObject.expired() {
             cacheObject.setTTL(ttl)
             return true
         }
