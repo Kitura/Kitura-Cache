@@ -25,7 +25,7 @@
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
 
 ## Swift version
-The latest version of KituraCache requires **Swift 4.0** but recommends usind **4.1.2** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
+The latest version of KituraCache requires **Swift 4.0** but recommends using **4.1.2** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
 
 ## Usage
 
