@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="http://kitura.dev/">
+    <a href="https://www.kitura.dev/">
         <img src="https://raw.githubusercontent.com/Kitura/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
     </a>
 </p>
@@ -9,11 +9,10 @@
     <a href="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml">
     <img src="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI">
     </a>
-    <img src="https://img.shields.io/badge/os-macOS-green.svg?style=flat" alt="macOS">
-    <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
-    <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
-    <a href="http://swift-at-ibm-slack.mybluemix.net/">
-    <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
+    <img src="https://img.shields.io/badge/Swift-6.0%2B-orange.svg?style=flat" alt="Swift 6.0+">
+    <img src="https://img.shields.io/badge/platforms-Apple%20%7C%20Linux%20%7C%20Android%20%7C%20Wasm-green.svg?style=flat" alt="Apple, Linux, Android, and Wasm">
+    <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" alt="Apache 2.0">
     </a>
 </p>
 
@@ -21,8 +20,11 @@
 
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
 
-## Swift version
-The latest version of KituraCache requires **Swift 6.0** or newer. You can download Swift by following this [link](https://swift.org/download/). Compatibility with older Swift versions is not guaranteed.
+## Requirements
+
+KituraCache requires **Swift 6.0** or newer. Install Swift from [Swift.org](https://www.swift.org/install/). Compatibility with older Swift versions is not guaranteed.
+
+CI validates Linux and macOS with Swift Testing, builds the Apple platforms declared in `Package.swift`, builds API documentation with Swift-DocC, and compile-checks Android and Wasm with the official Swift SDK bundles.
 
 ## Usage
 
@@ -37,7 +39,12 @@ Add the `Kitura-Cache` package to the dependencies within your application’s `
 Add `KituraCache` to your target's dependencies:
 
 ```swift
-.target(name: "example", dependencies: ["KituraCache"]),
+.target(
+    name: "Example",
+    dependencies: [
+        .product(name: "KituraCache", package: "Kitura-Cache")
+    ]
+)
 ```
 
 #### Import package
@@ -52,7 +59,7 @@ import KituraCache
 ```swift
 let cache = KituraCache()
 ```
-If no arguments are provided, the default cache will be non-expiring and a check will be made every 10 minutes to determine whether any entries need to be removed.
+If no arguments are provided, the default cache will be non-expiring and a check will be made every minute to determine whether any entries need to be removed.
 
 
 **To add an entry to the cache, or update an entry if the key already exists:**
@@ -105,7 +112,7 @@ swift package --disable-sandbox preview-documentation --target KituraCache
 
 ## Community
 
-We love to talk server-side Swift, and Kitura. Join our [Slack](http://swift-at-ibm-slack.mybluemix.net/) to meet the team!
+Use [Kitura GitHub Discussions](https://github.com/orgs/Kitura/discussions) for project-wide coordination and [KituraCache issues](https://github.com/Kitura/Kitura-Cache/issues) for package-specific bugs or feature requests.
 
 ## License
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/Kitura/Kitura-Cache/blob/master/LICENSE.txt).
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
