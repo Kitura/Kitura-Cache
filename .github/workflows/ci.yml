@@ -56,7 +56,7 @@ jobs:
             bash -lc '
               set -euo pipefail
               tmp_home="$(mktemp -d)"
-              if [[ -z "${tmp_home}" || "${tmp_home}" == "/" || ! -d "${tmp_home}" ]]; then
+              if [[ -z "${tmp_home}" || "${tmp_home}" == "/" || "${tmp_home}" != /tmp/* || ! -d "${tmp_home}" ]]; then
                 echo "Failed to create a temporary HOME directory." >&2
                 exit 1
               fi
