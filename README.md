@@ -59,7 +59,7 @@ import KituraCache
 ```swift
 let cache = KituraCache()
 ```
-If no arguments are provided, the default cache will be non-expiring and a check will be made every minute to determine whether any entries need to be removed.
+If no arguments are provided, the default cache will be non-expiring. On platforms that provide Dispatch, a check will be made every minute to determine whether any entries need to be removed. Expired entries are also ignored when fetched and cleaned up when keys are read.
 
 
 **To add an entry to the cache, or update an entry if the key already exists:**

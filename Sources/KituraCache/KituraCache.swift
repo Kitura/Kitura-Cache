@@ -15,7 +15,12 @@
  **/
 
 import Foundation
+
+#if canImport(Dispatch)
 import Dispatch
+#elseif canImport(Synchronization)
+import Synchronization
+#endif
 
 // MARK KituraCache
 
@@ -24,14 +29,20 @@ public class KituraCache {
     
     private var cache = [AnyHashable : CacheObject]()
     private let defaultTTL: UInt
+    #if canImport(Dispatch)
     private let checkFrequency: UInt
+    #endif
     
     /// `Statistics` about the cache.
     public private(set) var statistics: Statistics
 
+    #if canImport(Dispatch)
     private var timer: DispatchSourceTimer?
     private let timerQueue: DispatchQueue
     private let queue: DispatchQueue
+    #elseif canImport(Synchronization)
+    private let lock = Mutex(())
+    #endif
     
     /// Creates a cache.
     ///
@@ -41,20 +52,40 @@ public class KituraCache {
     ///
     /// - Parameters:
     ///   - defaultTTL: The time-to-live value, in seconds, used for new entries when none is specified in ``setObject(_:forKey:withTTL:)``. A value of `0` means entries never expire.
-    ///   - checkFrequency: The frequency, in seconds, used to check for expired entries.
+    ///   - checkFrequency: The frequency, in seconds, used to check for expired entries on platforms that provide Dispatch.
     public init(defaultTTL: UInt = 0, checkFrequency: UInt = 60) {
         self.defaultTTL = defaultTTL
+
+        #if canImport(Dispatch)
         self.checkFrequency = checkFrequency
+        #else
+        _ = checkFrequency
+        #endif
+
         statistics = Statistics()
-        
+
+        #if canImport(Dispatch)
         queue =  DispatchQueue(label: "KituraCache: queue", attributes: [DispatchQueue.Attributes.concurrent])
         timerQueue =  DispatchQueue(label: "KituraCache: timerQueue")
 
         startDataChecks()
+        #endif
     }
     
     deinit {
+        #if canImport(Dispatch)
         stopDataChecks()
+        #endif
+    }
+
+    private func syncWrite<T>(_ body: () -> T) -> T {
+        #if canImport(Dispatch)
+        return queue.sync(flags: [.barrier], execute: body)
+        #elseif canImport(Synchronization)
+        return lock.withLock { _ in body() }
+        #else
+        return body()
+        #endif
     }
     
     private func setCacheObject<T: Hashable>(_ object: Any, forKey key: T, withTTL ttl: UInt) {
@@ -84,7 +115,7 @@ public class KituraCache {
     public func setObject<T: Hashable>(_ object: Any, forKey key: T, withTTL: UInt?=nil) {
         let ttl = withTTL ?? defaultTTL
 
-        queue.sync(flags: [.barrier]) {
+        syncWrite {
             setCacheObject(object, forKey: key, withTTL: ttl)
         }
     }
@@ -117,11 +148,9 @@ public class KituraCache {
     /// - Parameter key: The key associated with the entry to retrieve.
     /// - Returns: The object stored in the cache for the specified key, or `nil` if no object exists for that key.
     public func object<T: Hashable>(forKey key: T) -> Any? {
-        var object : Any?
-        queue.sync() {
-            object = getCacheObject(forKey: key)
+        syncWrite {
+            getCacheObject(forKey: key)
         }
-        return object
     }
     
     /// Retrieves all keys currently present in the cache.
@@ -133,14 +162,14 @@ public class KituraCache {
     ///
     /// - Returns: An array of all keys currently present in the cache.
     public func keys() -> [Any] {
-        var keys : [Any]?
-        queue.sync() {
-            keys = cacheKeys()
+        syncWrite {
+            cacheKeys()
         }
-        return keys!
     }
     
     private func cacheKeys() -> [Any] {
+        check()
+
         var keys = [Any]()
         for key in self.cache.keys {
             keys.append(key.base)
@@ -183,7 +212,7 @@ public class KituraCache {
     ///
     /// - Parameter keys: The keys associated with the entries to remove.
     public func removeObjects<T: Hashable>(forKeys keys: [T]) {
-        queue.sync(flags: [.barrier]) {
+        syncWrite {
             removeCacheObjects(forKeys: keys)
         }
     }
@@ -203,7 +232,7 @@ public class KituraCache {
     /// cache.removeAllObjects()
     /// ```
     public func removeAllObjects() {
-        queue.sync(flags: [.barrier]) {
+        syncWrite {
             removeAllCacheObjects()
         }
     }
@@ -227,11 +256,9 @@ public class KituraCache {
     ///   - key: The key identifying the entry to update.
     /// - Returns: `true` if the TTL was set successfully, or `false` if the key does not exist.
     public func setTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
-        var success = false
-        queue.sync(flags: [.barrier]) {
-            success = setCacheObjectTTL(ttl, forKey: key)
+        syncWrite {
+            setCacheObjectTTL(ttl, forKey: key)
         }
-        return success
     }
     
     private func setCacheObjectTTL<T: Hashable>(_ ttl: UInt, forKey key: T) -> Bool {
@@ -251,7 +278,7 @@ public class KituraCache {
     /// cache.flush()
     /// ```
     public func flush() {
-        queue.sync(flags: [.barrier]) {
+        syncWrite {
             flushCache()
         }
     }
@@ -272,37 +299,19 @@ public class KituraCache {
         }
     }
     
+    #if canImport(Dispatch)
     private func startDataChecks() {
         timer = DispatchSource.makeTimerSource(queue: timerQueue)
 
-        #if swift(>=4)
-            timer!.schedule(deadline: DispatchTime.now(), repeating: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
-        #else
-            timer!.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
-        #endif
+        timer!.schedule(deadline: DispatchTime.now(), repeating: Double(checkFrequency), leeway: DispatchTimeInterval.milliseconds(1))
 
         timer!.setEventHandler() {
-            self.queue.sync(flags: [.barrier], execute: self.check)
+            self.syncWrite(self.check)
         }
         
         timer!.resume()
     }
-    
-    private func restartDataChecks() {
-        guard let timer = timer else {
-            return
-        }
-        timer.suspend()
 
-        #if swift(>=4)
-            timer.schedule(deadline: DispatchTime.now(), repeating: Double(checkFrequency))
-        #else
-            timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(checkFrequency))
-        #endif
-
-        timer.resume()
-    }
-    
     private func stopDataChecks() {
         guard let _ = timer else {
             return
@@ -310,4 +319,5 @@ public class KituraCache {
         timer!.cancel()
         timer = nil
     }
+    #endif
 }

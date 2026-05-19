@@ -12,7 +12,7 @@ Create a non-expiring cache:
 let cache = KituraCache()
 ```
 
-Create a cache whose entries expire by default:
+Create a cache whose entries expire by default. On platforms that provide Dispatch, `checkFrequency` controls the periodic cleanup pass:
 
 ```swift
 let cache = KituraCache(defaultTTL: 3600, checkFrequency: 600)
