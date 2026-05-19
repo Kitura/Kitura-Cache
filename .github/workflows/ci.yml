@@ -45,13 +45,18 @@ jobs:
       - name: Build and test
         run: |
           set -euo pipefail
+          uid="$(id -u)"
+          gid="$(id -g)"
 
           docker run --rm \
+            --user "${uid}:${gid}" \
+            -e HOME=/tmp/kitura-cache-home \
             -v "${PWD}:/workspace" \
             -w /workspace \
             swift:${{ matrix.image }} \
             bash -lc '
               set -euo pipefail
+              mkdir -p "${HOME}"
               swift --version
               swift build
               swift test
