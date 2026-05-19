@@ -55,8 +55,13 @@ jobs:
             swift:${{ matrix.image }} \
             bash -lc '
               set -euo pipefail
-              export HOME="$(mktemp -d)"
-              trap "if [[ -n \"\${HOME:-}\" && \"\${HOME}\" == /tmp/* ]]; then rm -rf \"\${HOME}\"; fi" EXIT
+              tmp_home="$(mktemp -d)"
+              if [[ -z "${tmp_home}" || "${tmp_home}" == "/" || ! -d "${tmp_home}" ]]; then
+                echo "Failed to create a temporary HOME directory." >&2
+                exit 1
+              fi
+              export HOME="${tmp_home}"
+              trap "rm -rf \"${tmp_home}\"" EXIT
               swift --version
               swift build
               swift test
