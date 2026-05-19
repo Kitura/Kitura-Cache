@@ -6,9 +6,6 @@
 
 
 <p align="center">
-    <a href="https://kitura.github.io/Kitura-Cache/index.html">
-    <img src="https://img.shields.io/badge/apidoc-KituraCache-1FBCE4.svg?style=flat" alt="APIDoc">
-    </a>
     <a href="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml">
     <img src="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI">
     </a>
@@ -25,7 +22,7 @@
 `KituraCache` is an in-memory, thread-safe cache which allows you to store objects against a unique, [Hashable](https://developer.apple.com/documentation/swift/hashable) key.
 
 ## Swift version
-The latest version of KituraCache requires **Swift 4.0** but recommends using **4.1.2** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
+The latest version of KituraCache requires **Swift 6.0** or newer. You can download Swift by following this [link](https://swift.org/download/). Compatibility with older Swift versions is not guaranteed.
 
 ## Usage
 
@@ -92,8 +89,19 @@ cache.removeObject(forKey: 1)
 cache.flush()
 ```
 
-## API Documentation
-For more information visit our [API reference](https://kitura.github.io/Kitura-Cache/index.html).
+## Documentation
+
+KituraCache uses Swift-DocC for API documentation. Generate the documentation locally with:
+
+```bash
+swift package --allow-writing-to-directory .build generate-documentation --target KituraCache --output-path .build/KituraCache.doccarchive --warnings-as-errors
+```
+
+Preview it in a browser with:
+
+```bash
+swift package --disable-sandbox preview-documentation --target KituraCache
+```
 
 ## Community
 
