@@ -9,8 +9,8 @@
     <a href="https://kitura.github.io/Kitura-Cache/index.html">
     <img src="https://img.shields.io/badge/apidoc-KituraCache-1FBCE4.svg?style=flat" alt="APIDoc">
     </a>
-    <a href="https://travis-ci.org/Kitura/Kitura-Cache">
-    <img src="https://travis-ci.org/Kitura/Kitura-Cache.svg?branch=master" alt="Build Status - Master">
+    <a href="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml">
+    <img src="https://github.com/Kitura/Kitura-Cache/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI">
     </a>
     <img src="https://img.shields.io/badge/os-macOS-green.svg?style=flat" alt="macOS">
     <img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
