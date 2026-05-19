@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - "issue*"
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux / Swift ${{ matrix.swift }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - swift: 4.0.3
+            image: 4.0.3
+          - swift: 4.1.3
+            image: 4.1.3
+          - swift: 4.2.4
+            image: 4.2.4
+          - swift: 5.0.3
+            image: 5.0.3-xenial
+          - swift: 5.1
+            image: "5.1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build and test
+        run: |
+          set -euo pipefail
+
+          docker run --rm \
+            -v "${PWD}:/workspace" \
+            -w /workspace \
+            swift:${{ matrix.image }} \
+            bash -lc '
+              set -euo pipefail
+              swift --version
+              swift build
+              swift test
+            '
+
+  macos:
+    name: macOS / default Swift
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build and test
+        run: |
+          set -euo pipefail
+          swift --version
+          swift build
+          swift test
