@@ -17,26 +17,27 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  SWIFT_CURRENT_IMAGE: swift:6.3.2-noble
+  SWIFT_WASM_SDK_URL: https://download.swift.org/swift-6.3.2-release/wasm-sdk/swift-6.3.2-RELEASE/swift-6.3.2-RELEASE_wasm.artifactbundle.tar.gz
+  SWIFT_WASM_SDK_CHECKSUM: a61f0584c93283589f8b2f42db05c1f9a182b506c2957271402992655591dd7c
+  SWIFT_ANDROID_SDK_URL: https://download.swift.org/swift-6.3.2-release/android-sdk/swift-6.3.2-RELEASE/swift-6.3.2-RELEASE_android.artifactbundle.tar.gz
+  SWIFT_ANDROID_SDK_CHECKSUM: 939e933549d12d28f2e0bf71019d734d309859e9773c572657ce565a81f85d68
+
 jobs:
   linux:
     name: Linux / Swift ${{ matrix.swift }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 20
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - swift: 4.0.3
-            image: 4.0.3
-          - swift: 4.1.3
-            image: 4.1.3
-          - swift: 4.2.4
-            image: 4.2.4
-          - swift: 5.0.3
-            image: 5.0.3-xenial
-          - swift: 5.1
-            image: "5.1"
+          - swift: "6.0"
+            image: swift:6.0-noble
+          - swift: "6.3.2"
+            image: swift:6.3.2-noble
 
     steps:
       - name: Checkout
@@ -49,26 +50,132 @@ jobs:
           docker run --rm \
             -v "${PWD}:/workspace" \
             -w /workspace \
-            swift:${{ matrix.image }} \
+            "${{ matrix.image }}" \
             bash -lc '
               set -euo pipefail
               swift --version
-              swift build
               swift test
             '
 
-  macos:
-    name: macOS / default Swift
-    runs-on: macos-latest
+  apple-platforms:
+    name: Apple platforms
+    runs-on: macos-15
     timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build and test
+      - name: Show toolchain
         run: |
           set -euo pipefail
           swift --version
-          swift build
+          xcodebuild -version
+          xcodebuild -showsdks
+
+      - name: Test on macOS
+        run: |
+          set -euo pipefail
           swift test
+
+      - name: Build Apple platform targets
+        run: |
+          set -euo pipefail
+
+          build_platform() {
+            local name="$1"
+            local triple="$2"
+            local sdk="$3"
+            local sdk_path
+
+            sdk_path="$(xcrun --sdk "${sdk}" --show-sdk-path)"
+            echo "::group::${name}"
+            swift build \
+              --target KituraCache \
+              --triple "${triple}" \
+              --sdk "${sdk_path}" \
+              --scratch-path "${RUNNER_TEMP}/spm-${name}"
+            echo "::endgroup::"
+          }
+
+          build_platform "macos" "arm64-apple-macosx14.0" "macosx"
+          build_platform "ios" "arm64-apple-ios17.0" "iphoneos"
+          build_platform "tvos" "arm64-apple-tvos17.0" "appletvos"
+          build_platform "watchos" "arm64_32-apple-watchos10.0" "watchos"
+          build_platform "mac-catalyst" "arm64-apple-ios17.0-macabi" "macosx"
+          build_platform "visionos" "arm64-apple-xros1.0" "xros"
+
+  documentation:
+    name: Documentation / Swift-DocC
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build documentation
+        run: |
+          set -euo pipefail
+
+          docker run --rm \
+            -v "${PWD}:/workspace" \
+            -w /workspace \
+            "${SWIFT_CURRENT_IMAGE}" \
+            bash -lc '
+              set -euo pipefail
+              swift --version
+              swift package \
+                --allow-writing-to-directory .build \
+                generate-documentation \
+                --target KituraCache \
+                --output-path .build/KituraCache.doccarchive \
+                --warnings-as-errors \
+                --experimental-documentation-coverage \
+                --coverage-summary-level brief
+            '
+
+  swift-sdks:
+    name: Swift SDKs / Android + Wasm
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build with Android and Wasm SDKs
+        run: |
+          set -euo pipefail
+
+          ndk_home="${ANDROID_NDK_HOME:-${ANDROID_NDK_LATEST_HOME:-}}"
+          if [[ -z "${ndk_home}" ]]; then
+            echo "ANDROID_NDK_HOME or ANDROID_NDK_LATEST_HOME must be available on the runner." >&2
+            exit 1
+          fi
+
+          docker run --rm \
+            -v "${PWD}:/workspace" \
+            -v "${ndk_home}:/opt/android-ndk:ro" \
+            -e ANDROID_NDK_HOME=/opt/android-ndk \
+            -e SWIFT_WASM_SDK_URL \
+            -e SWIFT_WASM_SDK_CHECKSUM \
+            -e SWIFT_ANDROID_SDK_URL \
+            -e SWIFT_ANDROID_SDK_CHECKSUM \
+            -w /workspace \
+            "${SWIFT_CURRENT_IMAGE}" \
+            bash -lc '
+              set -euo pipefail
+              swift --version
+
+              swift sdk install "${SWIFT_WASM_SDK_URL}" --checksum "${SWIFT_WASM_SDK_CHECKSUM}"
+              swift build --target KituraCache --swift-sdk swift-6.3.2-RELEASE_wasm
+
+              swift sdk install "${SWIFT_ANDROID_SDK_URL}" --checksum "${SWIFT_ANDROID_SDK_CHECKSUM}"
+              cd "${HOME}/.swiftpm/swift-sdks/swift-6.3.2-RELEASE_android.artifactbundle/swift-android"
+              ./scripts/setup-android-sdk.sh
+              cd /workspace
+
+              swift build --target KituraCache --swift-sdk aarch64-unknown-linux-android28
+              swift build --target KituraCache --swift-sdk x86_64-unknown-linux-android28
+            '
