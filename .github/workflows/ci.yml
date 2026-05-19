@@ -56,7 +56,7 @@ jobs:
             bash -lc '
               set -euo pipefail
               export HOME="$(mktemp -d)"
-              trap "rm -rf \"${HOME}\"" EXIT
+              trap "if [[ -n \"\${HOME:-}\" && \"\${HOME}\" == /tmp/* ]]; then rm -rf \"\${HOME}\"; fi" EXIT
               swift --version
               swift build
               swift test
