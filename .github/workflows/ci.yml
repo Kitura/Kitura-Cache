@@ -50,7 +50,7 @@ jobs:
 
           docker run --rm \
             --user "${uid}:${gid}" \
-            -e HOME=/tmp/kitura-cache-home \
+            -e HOME="/tmp/kitura-cache-home-${uid}-${gid}" \
             -v "${PWD}:/workspace" \
             -w /workspace \
             swift:${{ matrix.image }} \
