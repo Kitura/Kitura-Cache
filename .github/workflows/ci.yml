@@ -50,13 +50,12 @@ jobs:
 
           docker run --rm \
             --user "${uid}:${gid}" \
-            -e HOME="/tmp/kitura-cache-home-${uid}-${gid}" \
             -v "${PWD}:/workspace" \
             -w /workspace \
             swift:${{ matrix.image }} \
             bash -lc '
               set -euo pipefail
-              mkdir -p "${HOME}"
+              export HOME="$(mktemp -d /tmp/kitura-cache-home.XXXXXX)"
               swift --version
               swift build
               swift test
