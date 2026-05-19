@@ -56,12 +56,15 @@ jobs:
             bash -lc '
               set -euo pipefail
               tmp_home="$(mktemp -d)"
-              if [[ -z "${tmp_home}" || "${tmp_home}" == "/" || "${tmp_home}" != /tmp/* || ! -d "${tmp_home}" ]]; then
+              resolved_tmp_home="$(realpath "${tmp_home}")"
+              if [[ -z "${resolved_tmp_home}" || "${resolved_tmp_home}" == "/" || "${resolved_tmp_home}" != /tmp/* || ! -d "${resolved_tmp_home}" ]]; then
                 echo "Failed to create a temporary HOME directory." >&2
                 exit 1
               fi
-              export HOME="${tmp_home}"
-              trap "rm -rf \"${tmp_home}\"" EXIT
+              readonly resolved_tmp_home
+              export HOME="${resolved_tmp_home}"
+              cleanup() { rm -rf -- "${resolved_tmp_home}"; }
+              trap cleanup EXIT
               swift --version
               swift build
               swift test
