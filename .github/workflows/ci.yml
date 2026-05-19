@@ -55,7 +55,8 @@ jobs:
             swift:${{ matrix.image }} \
             bash -lc '
               set -euo pipefail
-              export HOME="$(mktemp -d /tmp/kitura-cache-home.XXXXXX)"
+              export HOME="$(mktemp -d)"
+              trap "rm -rf \"${HOME}\"" EXIT
               swift --version
               swift build
               swift test
