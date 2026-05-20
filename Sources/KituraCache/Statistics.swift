@@ -19,37 +19,28 @@
 /// Statistics about the cache.
 public struct Statistics {
     
-    /**
-     The total number of times an access attempt successfully retrieved an entry from the cache.
-    ### Usage Example: ###
-    ````swift
-     let cache = KituraCache()
-     ...
-     let numHits = cache.statistics.hits
-     ```
-    */
+    /// The total number of times an access attempt successfully retrieved an entry from the cache.
+    ///
+    /// ```swift
+    /// let cache = KituraCache()
+    /// let numHits = cache.statistics.hits
+    /// ```
     public internal(set) var hits = 0
     
-    /**
-     The total number of times an access attempt was unable to retrieve an entry from the cache.
-    ### Usage Example: ###
-    ````swift
-    let cache = KituraCache()
-    ...
-    let numMisses = cache.statistics.misses
-    ```
-    */
+    /// The total number of times an access attempt was unable to retrieve an entry from the cache.
+    ///
+    /// ```swift
+    /// let cache = KituraCache()
+    /// let numMisses = cache.statistics.misses
+    /// ```
     public internal(set) var misses = 0
     
-    /**
-     The total number of entries currently in the cache.
-     ### Usage Example: ###
-     ````swift
-     let cache = KituraCache()
-     ...
-     let numKeys = cache.statistics.numberOfKeys
-     ```
-     */
+    /// The total number of entries currently in the cache.
+    ///
+    /// ```swift
+    /// let cache = KituraCache()
+    /// let numKeys = cache.statistics.numberOfKeys
+    /// ```
     public internal(set) var numberOfKeys = 0
     
     mutating func reset() {
@@ -58,4 +49,3 @@ public struct Statistics {
         numberOfKeys = 0
     }
 }
-
